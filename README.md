@@ -1,10 +1,5 @@
-## Application My-School ['Back-End']
+## Application My-clinik
 
-##### Outils
-- Pour la modelisation de la base de donne
-    Use DBML to define your database structure
-    Docs: https://dbml.dbdiagram.io/docs
-    link: [Le lien pour visualiser la bdd](https://dbdiagram.io/d/my-School-667304205a764b3c72e7322c)
 
 
 
