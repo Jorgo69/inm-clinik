@@ -14,8 +14,23 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            boxShadow: {
+                '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+              },
+              backgroundImage: {
+                'backgroundImg': "url('/assets/background.jpg')",
+                'hero-pattern': "url('/img/hero-pattern.svg')",
+                'footer-texture': "url('/img/footer-texture.png')",
+              },
+              
         },
     },
+    plugins: [
+        forms,
+        require('flowbite/plugin')
+    ],
+    
 
-    plugins: [forms],
+
+    // plugins: [forms],
 };
