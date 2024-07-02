@@ -1,13 +1,13 @@
 <?php
 
+use App\Http\Controllers\Essay\EssayController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 // Ressource Try Folder
 // Try - Accueil 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home.index');
+Route::get('/', [EssayController::class, 'homeIndex'])->name('home.index');
+Route::post('/try/ask', [EssayController::class, 'store'])->name('try.ask.post');
 
 // About - A propos
 Route::get('/about', function() {
@@ -17,7 +17,12 @@ Route::get('/about', function() {
 // Offer - Nos Offres
 Route::get('/offers-our', function() {
     return view('try.offer');
-})->name('try-offer');
+})->name('try.offer');
+
+// Contact-us - Nous contactez
+Route::get('/contact-us', function() {
+    return view('try.contact-us');
+})->name('try.contact');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
