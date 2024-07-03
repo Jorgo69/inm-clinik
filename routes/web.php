@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Route;
 // Try - Accueil 
 Route::get('/', [EssayController::class, 'homeIndex'])->name('home.index');
 Route::post('/try/ask', [EssayController::class, 'store'])->name('try.ask.post');
+Route::get('verif', function() {
+    return view('emails.verify');
+});
 
 // About - A propos
 Route::get('/about', function() {

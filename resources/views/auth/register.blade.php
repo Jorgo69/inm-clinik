@@ -24,13 +24,6 @@
         </div>
 
         <!-- Le Sexe: Le Genre -->
-        {{-- <div>
-            <x-input-label for="gender" :value="__('Sexe')" />
-            <x-text-input id="gender" class="block mt-1 w-full" type="text" name="gender" :value="old('gender')" required autofocus autocomplete="gender" />
-            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
-        </div> --}}
-
-        <!-- You can actually customize padding on a select element: -->
         <div class="block mt-1">
             <select name="gender" :value="old('gender')" class="px-4 py-3 w-full mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
                 <option>Choisissez votre Sexe</option>

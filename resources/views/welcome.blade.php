@@ -32,12 +32,31 @@
                 <h2 class="block uppercase">Essayez Soft Care Gratuitement</h2>
                 <p>Découvrez par vous-même pourquoi Soft Care est le choix préféré des professionnels de santé dans plus de 120 pays. Inscrivez-vous dès aujourd'hui pour une démonstration gratuite.</p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 place-content-stretch">
-                    <x-text-input placeholder="Nom Complet *" />
-                    <x-text-input placeholder="Titre d'emploi" />
-                    <x-text-input placeholder="Nom de l'hopital *" />
-                    <x-text-input placeholder="Email de travail*" />
-                    <x-text-input placeholder="Numero Whatsapp *" />
-                    <x-text-input placeholder="Pays *" />
+                    <input type="hidden" name="role" value="no_patient">
+                    <x-text-input placeholder="Nom *" name="name"/>
+                    <x-text-input placeholder="Prenom *" name="firstname"/>
+                    <div class="">
+                        <x-text-input type='date' class="text-gray-500 w-full" name="birthdate" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"/>
+                        <x-input-label :value="__('Votre date de naissance *')" />
+                    </div>
+                    <div class="flex items-center me-4 gap-x-4">
+                        <div class="">
+                            <input checked id="male-red-checkbox" name="gender" type="radio" value="male" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="male-red-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Homme</label>
+                        </div>
+                        <div class="">
+                            <input id="female-green-checkbox" name="gender" type="radio" value="female" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                            <label for="female-green-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Femme</label>
+                        </div>
+                        <div class="">
+                            <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sexe *</label>
+                        </div>
+                    </div>
+                    <x-text-input placeholder="Titre d'emploi" name="job_title" />
+                    <x-text-input placeholder="Votre Email *" name="email" />
+                    <x-text-input placeholder="Mot de Passe *" name="password" />
+                    <x-text-input placeholder="Mot de Passe (Confirmation) *" name="confirm_password" />
+                    {{-- <x-text-input placeholder="Pays *" name="country" /> --}}
                 </div>
                     <x-primary-button class="my-4 w-1/2 h-10 justify-center">Commencer</x-primary-button>
             </div>  
