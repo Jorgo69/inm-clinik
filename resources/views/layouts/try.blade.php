@@ -62,7 +62,7 @@
                                         <span class="sr-only">Fermer</span>
                                     </button>
                                 </div>
-                                <form action="{{route('try.ask.post')}}" method="POST">
+                                <form action="{{route('register')}}" method="POST">
                                     @csrf
                                     <!-- Modal body -->
                                     <div class="p-4 md:p-5 space-y-4">
@@ -83,7 +83,6 @@
                                                     <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sexe *</label>
                                                 </div>
                                             </div>
-                                            <x-text-input placeholder="Titre d'emploi" name="job_title" />
                                             <x-text-input placeholder="Votre Email *" name="email" />
                                             <x-text-input placeholder="Mot de Passe *" name="password" />
                                             <x-text-input placeholder="Mot de Passe (Confirmation) *" name="confirm_password" />

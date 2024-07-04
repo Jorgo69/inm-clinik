@@ -1,13 +1,13 @@
 <x-try-layout>    
 
     {{-- Hero Section --}}
-    <header class="bg-center bg-no-repeat h-full w-full bg-backgroundImg bg-gray-400 bg-blend-multiply" style="background-image: url('/assets/header-doctor-femme.jpg');">
+    <header class="bg-center  bg-no-repeat h-full w-full bg-scroll hover:bg-fixed bg-gray-400 bg-blend-multiply" style="background-image: url('/assets/header-doctor-femme.jpg');">
         <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
             <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">Bienvenue sur Soft Care</h1>
             <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">
                 Votre sante est notre preoccupation numero 1.</p>
             <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0">
-                <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
+                <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary hover:bg-primaryHover animate focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
                     Essayer Gratuitement
                     <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
@@ -20,46 +20,66 @@
         </div>
     </header>
     {{-- End Hero Section --}}
+    {{-- Alert --}}
+    @if (Session::has('success'))
+    <div class="flex w-full max-w-sm overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
+        <div class="flex items-center justify-center w-12 bg-emerald-500">
+            <svg class="w-6 h-6 text-white fill-current" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM16.6667 28.3333L8.33337 20L10.6834 17.65L16.6667 23.6166L29.3167 10.9666L31.6667 13.3333L16.6667 28.3333Z" />
+            </svg>
+        </div>
+    
+        <div class="px-4 py-2 -mx-3">
+            <div class="mx-3">
+                <span class="font-semibold text-emerald-500 dark:text-emerald-400">Success</span>
+                <p class="text-sm text-gray-600 dark:text-gray-200">
+                    {{ Session::get('success') }}
+                </p>
+            </div>
+        </div>
+    </div>
+    @endif
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 place-content-stretch text-gray-50 mx-20 my-14">
-            <div class="p-4 bg-red-400 ">
+            <div class="p-4 bg-primary ">
                 <h2 class="block text-2xl uppercase font-black sm:text-xl md:text-xl">Transformer la vision de votre  établissement de santé</h2>
-                <p class="text-gray-100 tracking-widest text-left italic mt-10">
+                <p class="text-gray-100 font-montserrat montserrat-uniquifier  tracking-widest text-left mt-10">
                     Soft Care est la solution idéale pour optimiser la gestion de votre hôpital ou clinique. Grâce à notre logiciel innovant, améliorez l'efficacité opérationnelle et la qualité des soins, tout en réduisant les coûts
                 </p>
             </div>
-            <div class="p-4 bg-gray-400 rounded text-center">
-                <h2 class="block uppercase">Essayez Soft Care Gratuitement</h2>
-                <p>Découvrez par vous-même pourquoi Soft Care est le choix préféré des professionnels de santé dans plus de 120 pays. Inscrivez-vous dès aujourd'hui pour une démonstration gratuite.</p>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 place-content-stretch">
-                    <input type="hidden" name="role" value="no_patient">
-                    <x-text-input placeholder="Nom *" name="name"/>
-                    <x-text-input placeholder="Prenom *" name="firstname"/>
-                    <div class="">
-                        <x-text-input type='date' class="text-gray-500 w-full" name="birthdate" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"/>
-                        <x-input-label :value="__('Votre date de naissance *')" />
+            <form action="{{route('register')}}" method="post">
+                @csrf
+                <div class="p-4 bg-gray-400 rounded text-center">
+                    <h2 class="block uppercase">Essayez Soft Care Gratuitement</h2>
+                    <p>Découvrez par vous-même pourquoi Soft Care est le choix préféré des professionnels de santé dans plus de 120 pays. Inscrivez-vous dès aujourd'hui pour une démonstration gratuite.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4 place-content-stretch">
+                        <input type="hidden" name="role" value="no_patient">
+                        <x-text-input placeholder="Nom *" name="name"/>
+                        <x-text-input placeholder="Prenom *" name="firstname"/>
+                        <div class=""> 
+                            <x-text-input type='date' class="text-gray-500 w-full" name="birthdate" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"/>
+                            <x-input-label class="float-start" :value="__('Votre date de naissance *')" />
+                        </div>
+                        <div class="flex items-center me-4 gap-x-4">
+                            <div class="">
+                                <input checked id="male-red-checkbox" name="gender" type="radio" value="male" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="male-red-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Homme</label>
+                            </div>
+                            <div class="">
+                                <input id="female-green-checkbox" name="gender" type="radio" value="female" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="female-green-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Femme</label>
+                            </div>
+                            <div class="">
+                                <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sexe *</label>
+                            </div>
+                        </div>
+                        <x-text-input placeholder="Votre Email *" name="email" />
+                        <x-text-input placeholder="Mot de Passe *" name="password" />
+                        <x-text-input placeholder="Mot de Passe (Confirmation) *" name="confirm_password" />
                     </div>
-                    <div class="flex items-center me-4 gap-x-4">
-                        <div class="">
-                            <input checked id="male-red-checkbox" name="gender" type="radio" value="male" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="male-red-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Homme</label>
-                        </div>
-                        <div class="">
-                            <input id="female-green-checkbox" name="gender" type="radio" value="female" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="female-green-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Femme</label>
-                        </div>
-                        <div class="">
-                            <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sexe *</label>
-                        </div>
-                    </div>
-                    <x-text-input placeholder="Titre d'emploi" name="job_title" />
-                    <x-text-input placeholder="Votre Email *" name="email" />
-                    <x-text-input placeholder="Mot de Passe *" name="password" />
-                    <x-text-input placeholder="Mot de Passe (Confirmation) *" name="confirm_password" />
-                    {{-- <x-text-input placeholder="Pays *" name="country" /> --}}
+                        <x-primary-button class="my-4 w-1/2 h-10 justify-center">Commencer</x-primary-button>
                 </div>
-                    <x-primary-button class="my-4 w-1/2 h-10 justify-center">Commencer</x-primary-button>
-            </div>  
+            </form>  
     </div>
 
     <section class=" mx-4 my-8 bg-white dark:bg-gray-900">

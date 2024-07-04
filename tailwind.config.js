@@ -13,6 +13,9 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                poppins: ['Poppins'],
+                montserrat: ['Montserrat'],
+
             },
             fontSize: {
                 sm: ['15px', '20px'],
@@ -32,6 +35,12 @@ export default {
                 extrabold: '800',
                 'extra-bold': '800',
                 black: '900',
+              },
+              colors: {
+                primary: ' #1a56db',
+                primaryHover: '#1e429f',
+                secondary: '#33FF77',
+                danger: '#dc3545',
               },
             boxShadow: {
                 '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',

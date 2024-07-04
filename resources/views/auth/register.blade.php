@@ -24,14 +24,37 @@
         </div>
 
         <!-- Le Sexe: Le Genre -->
-        <div class="block mt-1">
-            <select name="gender" :value="old('gender')" class="px-4 py-3 w-full mt-1 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
-                <option>Choisissez votre Sexe</option>
-                <option value="male">Homme</option>
-                <option value="female">Femme</option>
-            </select>
-            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
+        <div class="flex items-center my-2 gap-x-4">
+            
+            <div class="">
+                <input checked id="male-red-checkbox" name="gender" type="radio" value="male" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label for="male-red-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Homme</label>
+            </div>
+            <div class="">
+                <input id="female-green-checkbox" name="gender" type="radio" value="female" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label for="female-green-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Femme</label>
+            </div>
+            <div class="">
+                <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Sexe *</label>
+            </div>
+            
         </div>
+        <!-- Le Type: Compte -->
+        <div class="flex items-center my-2 gap-x-4">
+            
+            <div class="">
+                <input id="directot-red-checkbox" name="role" type="radio" value="director" class="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label for="directot-red-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Directeur</label>
+            </div>
+            <div class="">
+                <input checked id="patient-green-checkbox" name="role" type="radio" value="patient" class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 rounded focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <label for="patient-green-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Simple Utilisateur</label>
+            </div>
+            <div class="">
+                <label class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Type de compte</label>
+            </div>
+        </div>
+        
 
         <!-- Email Address -->
         <div class="mt-4">
