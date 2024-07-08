@@ -1,7 +1,7 @@
 <x-try-layout>    
 
     {{-- Hero Section --}}
-    <header class="bg-center  bg-no-repeat h-full w-full bg-scroll hover:bg-fixed bg-gray-400 bg-blend-multiply" style="background-image: url('/assets/header-doctor-femme.jpg');">
+    <header class="bg-center  bg-no-repeat h-full w-full bg-scroll hover:bg-fixed object-cover bg-gray-400 bg-blend-multiply" style="background-image: url('/assets/header-doctor-femme.jpg');">
         <div class="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
             <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-white md:text-5xl lg:text-6xl">Bienvenue sur Soft Care</h1>
             <p class="mb-8 text-lg font-normal text-gray-300 lg:text-xl sm:px-16 lg:px-48">

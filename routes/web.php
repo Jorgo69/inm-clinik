@@ -12,9 +12,24 @@ Route::get('/director/menu', function(){
     return view('director.menu');
 })->name('direcor.menu.index');
 
+
+Route::middleware(['auth', 'admin.systeme'])->group( function() {
+    Route::get('/admin/askers/index', function() {
+        return view('adminSystem.askers');
+    })->name('admin.asker.index');
+    Route::get('/admin/askers/detail', function() {
+        return view('adminSystem.asker-detail');
+    })->name('admin.asker.detail');
+});
 Route::get('/director/complet/infos', function() {
     return view('director.complet-infos');
 })->name('director.complet.infos.index');
+
+// Messenger
+Route::get('/messengers', function() {
+    return view('messengers.index');
+})->name('messenger.index');
+
 
 // About - A propos
 Route::get('/about', function() {

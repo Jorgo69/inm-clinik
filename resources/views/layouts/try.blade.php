@@ -105,6 +105,7 @@
                 {{-- Button --}}
                 @guest
                 <x-nav-link data-modal-target="default-modal" data-modal-toggle="default-modal" href="#">Essayer Gratuitement</x-nav-link>
+                <x-nav-link href="{{route('login')}}">Connexion</x-nav-link>
                 @else
                 <x-nav-link href="{{route('dashboard')}}" >Dashoard</x-nav-link>
                 <x-nav-link href="{{route('logout')}}" >Deconnexion</x-nav-link>

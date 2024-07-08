@@ -39,7 +39,7 @@ export default {
               colors: {
                 primary: ' #1a56db',
                 primaryHover: '#1e429f',
-                secondary: '#33FF77',
+                secondary: '#0e9f6e',
                 danger: '#dc3545',
               },
             boxShadow: {
