@@ -80,6 +80,7 @@
                                 </svg>
                             </button>
                         </div>
+                        {{-- @if ($asker->actived !== 'actived') --}}
                         <div class="flex items-center">
                             <div class="relative inline-block shrink-0">
                                 <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
@@ -99,6 +100,7 @@
                                 </a>
                             </div>
                         </div>
+                        {{-- @endif --}}
                         {{-- <div class="flex items-center">
                             <div class="relative inline-block shrink-0">
                                 <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">

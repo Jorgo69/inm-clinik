@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AskingController as AdminAskingController;
+use App\Http\Controllers\Director\AskingController;
 use App\Http\Controllers\Essay\EssayController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -14,13 +16,24 @@ Route::get('/director/menu', function(){
 
 
 Route::middleware(['auth', 'admin.systeme'])->group( function() {
-    Route::get('/admin/askers/index', function() {
-        return view('adminSystem.askers');
-    })->name('admin.asker.index');
-    Route::get('/admin/askers/detail', function() {
-        return view('adminSystem.asker-detail');
-    })->name('admin.asker.detail');
+    Route::get('/admin/askers/index', [AdminAskingController::class, 'index'])->name('admin.asker.index');
+    Route::get('/admin/askers/{asker_id}/detail',[AdminAskingController::class, 'show'])->name('admin.asker.detail');
+    Route::put('/admin/askers/put',[AdminAskingController::class, 'edit'])->name('admin.asker.validate');
+    // Route::get('/admin/askers/index', function() {
+    //     return view('adminSystem.askers');
+    // })->name('admin.asker.index');
+    // Route::get('/admin/askers/detail', function() {
+    //     return view('adminSystem.asker-detail');
+    // })->name('admin.asker.detail');
 });
+
+// Auth
+
+Route::middleware(['auth'])->group( function() {
+    Route::post('/director/asking/post', [AskingController::class, 'store'])->name('director.asking.post');
+});
+
+
 Route::get('/director/complet/infos', function() {
     return view('director.complet-infos');
 })->name('director.complet.infos.index');

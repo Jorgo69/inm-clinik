@@ -63,44 +63,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="w-4 p-4">
-                                <div class="flex items-center">
-                                    <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                </div>
-                            </td>
-                            <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Jese image">
-                                <div class="ps-3">
-                                    <div class="text-base font-semibold">Neil Sims</div>
-                                    <div class="font-normal text-gray-500">neil.sims@flowbite.com</div>
-                                </div>  
-                            </th>
-                            <td class="px-6 py-4">
-                                Homme
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center">
-                                    <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> En Attente...
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 flex justify-center">
-                                <!-- Modal toggle -->
-                                <a href="{{route('admin.asker.detail')}}" class="font-medium mx-4 text-primary dark:text-blue-500 hover:underline">
-                                    <?xml version="1.0" encoding="UTF-8"?>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="w-4 h-4"><path d="M21,0H3C1.35,0,0,1.35,0,3V24H24V3c0-1.65-1.35-3-3-3ZM12,5c.83,0,1.5,.67,1.5,1.5s-.67,1.5-1.5,1.5-1.5-.67-1.5-1.5,.67-1.5,1.5-1.5Zm2,14h-2v-7h-2v-2h2c1.1,0,2,.9,2,2v7Z"/>
-                                    </svg>
-
-                                </a>
-                                <a href="#" type="button" data-modal-target="editUserModal" data-modal-show="editUserModal" class="font-medium text-secondary dark:text-blue-500">
-                                    <?xml version="1.0" encoding="UTF-8"?>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="w-4 h-4">
-                                        <path d="m16.298,8.288l1.404,1.425-5.793,5.707c-.387.387-.896.58-1.407.58s-1.025-.195-1.416-.585l-2.782-2.696,1.393-1.437,2.793,2.707,5.809-5.701Zm7.702,3.712c0,6.617-5.383,12-12,12S0,18.617,0,12,5.383,0,12,0s12,5.383,12,12Zm-2,0c0-5.514-4.486-10-10-10S2,6.486,2,12s4.486,10,10,10,10-4.486,10-10Z"/>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
+                        @forelse ($askers as $asker)
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="w-4 p-4">
                                 <div class="flex items-center">
@@ -111,12 +74,12 @@
                             <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Jese image">
                                 <div class="ps-3">
-                                    <div class="text-base font-semibold">Bonnie Green</div>
-                                    <div class="font-normal text-gray-500">bonnie@flowbite.com</div>
+                                    <div class="text-base font-semibold">{{$asker->users->name. ' ' .$asker->users->firstname}}</div>
+                                    <div class="font-normal text-gray-500">{{$asker->users->email}}</div>
                                 </div>
                             </th>
                             <td class="px-6 py-4">
-                                Homme
+                                {{$asker->users->gender === 'male' ? 'Homme' : 'Femme' }}
                             </td>
                             <td class="px-6 py-4">
                                 <div class="flex items-center">
@@ -125,60 +88,22 @@
                             </td>
                             <td class="px-6 py-4 flex justify-center">
                                 <!-- Modal toggle -->
-                                <a href="{{route('admin.asker.detail')}}" class="font-medium mx-4 text-primary dark:text-blue-500 hover:underline">
+                                <a href="{{route('admin.asker.detail', ['asker_id' => $asker->id])}}" class="font-medium mx-4 text-primary dark:text-blue-500 hover:underline">
                                     <?xml version="1.0" encoding="UTF-8"?>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="w-4 h-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="size-10">
                                         <path d="M21,0H3C1.35,0,0,1.35,0,3V24H24V3c0-1.65-1.35-3-3-3ZM12,5c.83,0,1.5,.67,1.5,1.5s-.67,1.5-1.5,1.5-1.5-.67-1.5-1.5,.67-1.5,1.5-1.5Zm2,14h-2v-7h-2v-2h2c1.1,0,2,.9,2,2v7Z"/>
                                     </svg>
 
                                 </a>
                                 <a href="#" type="button" data-modal-show="editUserModal" class="font-medium text-secondary dark:text-blue-500">
                                     <?xml version="1.0" encoding="UTF-8"?>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="w-4 h-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_2" data-name="Layer 2" viewBox="0 0 24 24" class="size-10">
                                         <path d="m16.298,8.288l1.404,1.425-5.793,5.707c-.387.387-.896.58-1.407.58s-1.025-.195-1.416-.585l-2.782-2.696,1.393-1.437,2.793,2.707,5.809-5.701Zm7.702,3.712c0,6.617-5.383,12-12,12S0,18.617,0,12,5.383,0,12,0s12,5.383,12,12Zm-2,0c0-5.514-4.486-10-10-10S2,6.486,2,12s4.486,10,10,10,10-4.486,10-10Z"/>
                                     </svg>
                                 </a>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="w-4 p-4">
-                                <div class="flex items-center">
-                                    <input id="checkbox-table-search-2" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                    <label for="checkbox-table-search-2" class="sr-only">checkbox</label>
-                                </div>
-                            </td>
-                            <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Jese image">
-                                <div class="ps-3">
-                                    <div class="text-base font-semibold">Jese Leos</div>
-                                    <div class="font-normal text-gray-500">jese@flowbite.com</div>
-                                </div>
-                            </th>
-                            <td class="px-6 py-4">
-                                Homme
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center">
-                                    <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> En Attente...
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 flex justify-center">
-                                <!-- Modal toggle -->
-                                <a href="{{route('admin.asker.detail')}}" class="font-medium mx-4 text-primary dark:text-blue-500 hover:underline">
-                                    <?xml version="1.0" encoding="UTF-8"?>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="w-4 h-4">
-                                        <path d="M21,0H3C1.35,0,0,1.35,0,3V24H24V3c0-1.65-1.35-3-3-3ZM12,5c.83,0,1.5,.67,1.5,1.5s-.67,1.5-1.5,1.5-1.5-.67-1.5-1.5,.67-1.5,1.5-1.5Zm2,14h-2v-7h-2v-2h2c1.1,0,2,.9,2,2v7Z"/>
-                                    </svg>
-
-                                </a>
-                                <a href="#" type="button" data-modal-show="editUserModal" class="font-medium text-secondary dark:text-blue-500">
-                                    <?xml version="1.0" encoding="UTF-8"?>
-                                    <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="w-4 h-4">
-                                        <path d="m16.298,8.288l1.404,1.425-5.793,5.707c-.387.387-.896.58-1.407.58s-1.025-.195-1.416-.585l-2.782-2.696,1.393-1.437,2.793,2.707,5.809-5.701Zm7.702,3.712c0,6.617-5.383,12-12,12S0,18.617,0,12,5.383,0,12,0s12,5.383,12,12Zm-2,0c0-5.514-4.486-10-10-10S2,6.486,2,12s4.486,10,10,10,10-4.486,10-10Z"/>
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
+                        @empty
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td class="w-4 p-4">
                                 <div class="flex items-center">
@@ -257,6 +182,8 @@
                                 </a>
                             </td>
                         </tr>
+                        @endforelse
+                        
                     </tbody>
                 </table>
                 <!-- Edit user modal -->

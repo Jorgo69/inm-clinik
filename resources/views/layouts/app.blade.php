@@ -20,6 +20,7 @@
             @include('layouts.navigation')
             @include('layouts.sidebar')
             {{-- @include('layouts.mobile-navigation') --}}
+            
 
             <!-- Page Heading -->
             {{-- @isset($header)
