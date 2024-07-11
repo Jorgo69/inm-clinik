@@ -3,52 +3,43 @@
         <x-aside>
             <div class="xl:grid grid-cols-3 gap-10 mb-4">
                 <div class="my-10">
-                    <div class="relative flex w-auto flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-                      <div class="relative mx-4 -mt-6 size-20 overflow-hidden rounded-full text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
-                        <img src="{{$clinic->LogoUrl()}}" alt="" class="bg-cover bg-center">
-                      </div>
-                      <div class="px-4 py-2">
-                        <h5 class="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                         {{$clinic->clinic_name}}
-                        </h5>
-                        {{-- <p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
-                        Une description de 10 mots maximum sinon ...
-                        </p> --}}
-                      </div>
-                      <div class="mx-2 my-1 inline-flex">
-                        <div class="">
-                            <svg class="size-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="">
-                            <p>: {{$clinic->clinic_geographic_adress}}</p>
-                        </div>
-                      </div>
-                      <div class="mx-3 my-1 inline-flex">
-                        <div class="">
-                            Email de la clinique:
-                        </div>
-                        <div class="">
-                            <p>{{$clinic->clinic_mail}}</p>
-                        </div>
-                      </div>
-                      <div class="mx-3 my-1 inline-flex">
-                        <div class="">
-                            Numero fix de la clinique:
-                        </div>
-                        <div class="">
-                            <p>{{$clinic->clinic_name}}</p>
-                        </div>
-                      </div>
-
-                      <div class="m-6">
-                      </div>
+                  Nombre total de role: 10;
+                  <form action="" method="POST" enctype="multipart/form-data">
+                    @csrf
+  
+                    {{-- Nom du role --}}
+                    <div>
+                      <x-input-label for="clinic_name" :value="__('Nom du role *')" />
+                      <x-text-input id="clinic_name" class="block mt-1 p-2 w-full" type="text" name="clinic_name" required />
+                      <x-input-error :messages="$errors->get('clinic_name')" class="mt-2" />
                     </div>
+                  
+                  {{-- Description du role --}}
+                  <div>
+                    <x-input-label for="clinic_description" :value="__('Description du role *')" />
+                    <x-text-input id="clinic_description" class="block mt-1 p-2 w-full" type="text" name="clinic_description" required />
+                    <x-input-error :messages="$errors->get('clinic_description')" class="mt-2" />
                   </div>
+  
+                  {{-- Adresse Geographique --}}
+                  <div>
+                    <x-input-label for="clinic_geographic_adress" :value="__('Adresse Geographique de la clinique')" />
+                    <x-text-input id="clinic_geographic_adress" class="block mt-1 p-2 w-full" type="text" name="clinic_geographic_adress" required />
+                    <x-input-error :messages="$errors->get('clinic_geographic_adress')" class="mt-2" />
+                  </div>
+  
+                  {{-- Bouton --}}
+                  <div class="flex items-center justify-end mt-4">
+        
+                    <x-primary-button class="ms-3">
+                        {{ __('Créer un rôle') }}
+                    </x-primary-button>
+                  </div>
+  
+                  </form>
+                </div>
                 <div class="my-10">
-                  {{-- <div class="relative flex w-auto flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+                  <div class="relative flex w-auto flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
                     <div class="relative mx-4 -mt-6 size-20 overflow-hidden rounded-full text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
                       <img src="{{asset('assets/svg/logo.svg')}}" alt="" class="bg-cover bg-center">
                     </div>
@@ -65,7 +56,7 @@
                         voir plus
                       </button>
                     </div>
-                  </div> --}}
+                  </div>
                 </div>
                 <div class="my-10">
                   <div class="relative flex w-auto flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
@@ -88,6 +79,7 @@
                   </div>
                 </div>
               </div>
+
         </x-aside>
     </div>
 </x-app-layout>

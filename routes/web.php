@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AskingController as AdminAskingController;
+use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Director\AskingController;
 use App\Http\Controllers\Director\ClinicController;
 use App\Http\Controllers\Essay\EssayController;
@@ -28,11 +29,14 @@ Route::middleware(['auth', 'director'])->group( function() {
 
 });
 
-
-Route::middleware(['auth', 'admin.systeme'])->group( function() {
+// Auth - Admin Ressource
+Route::middleware(['auth', 'admin.system'])->group( function() {
     Route::get('/admin/askers/index', [AdminAskingController::class, 'index'])->name('admin.asker.index');
     Route::get('/admin/askers/{asker_id}/detail',[AdminAskingController::class, 'show'])->name('admin.asker.detail');
     Route::put('/admin/askers/put',[AdminAskingController::class, 'edit'])->name('admin.asker.validate');
+
+    // Index Role
+    Route::get('/admin/role/index', [RoleController::class, 'index'])->name('admin.role.index');
 });
 
 // Auth

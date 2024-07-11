@@ -88,13 +88,13 @@
                             </td>
                             <td class="px-6 py-4 flex justify-center">
                                 <!-- Modal toggle -->
-                                <a href="{{route('admin.asker.detail', ['asker_id' => $asker->id])}}" class="font-medium mx-4 text-primary dark:text-blue-500 hover:underline">
+                                <x-nav-link href="{{route('admin.asker.detail', ['asker_id' => $asker->id])}}" class="font-medium mx-4 text-primary dark:text-blue-500 hover:underline">
                                     <?xml version="1.0" encoding="UTF-8"?>
                                     <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="size-10">
                                         <path d="M21,0H3C1.35,0,0,1.35,0,3V24H24V3c0-1.65-1.35-3-3-3ZM12,5c.83,0,1.5,.67,1.5,1.5s-.67,1.5-1.5,1.5-1.5-.67-1.5-1.5,.67-1.5,1.5-1.5Zm2,14h-2v-7h-2v-2h2c1.1,0,2,.9,2,2v7Z"/>
                                     </svg>
 
-                                </a>
+                                </x-nav-link>
                                 <a href="#" type="button" data-modal-show="editUserModal" class="font-medium text-secondary dark:text-blue-500">
                                     <?xml version="1.0" encoding="UTF-8"?>
                                     <svg xmlns="http://www.w3.org/2000/svg" id="Layer_2" data-name="Layer 2" viewBox="0 0 24 24" class="size-10">
@@ -128,19 +128,19 @@
                             </td>
                             <td class="px-6 py-4 flex justify-center">
                                 <!-- Modal toggle -->
-                                <a href="{{route('admin.asker.detail')}}" class="font-medium mx-4 text-primary dark:text-blue-500 hover:underline">
+                                <x-nav-link href="" class="font-medium mx-4 text-primary dark:text-blue-500 hover:underline">
                                     <?xml version="1.0" encoding="UTF-8"?>
                                     <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="w-4 h-4">
                                         <path d="M21,0H3C1.35,0,0,1.35,0,3V24H24V3c0-1.65-1.35-3-3-3ZM12,5c.83,0,1.5,.67,1.5,1.5s-.67,1.5-1.5,1.5-1.5-.67-1.5-1.5,.67-1.5,1.5-1.5Zm2,14h-2v-7h-2v-2h2c1.1,0,2,.9,2,2v7Z"/>
-                                    </svg>
-
-                                </a>
-                                <a href="#" type="button" data-modal-show="editUserModal" class="font-medium text-secondary dark:text-blue-500">
+                                    </svg> Details
+                                </x-nav-link>
+                                <x-nav-link href="#" type="button" data-modal-show="editUserModal" class="font-medium text-secondary dark:text-blue-500">
                                     <?xml version="1.0" encoding="UTF-8"?>
                                     <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="w-4 h-4">
                                         <path d="m16.298,8.288l1.404,1.425-5.793,5.707c-.387.387-.896.58-1.407.58s-1.025-.195-1.416-.585l-2.782-2.696,1.393-1.437,2.793,2.707,5.809-5.701Zm7.702,3.712c0,6.617-5.383,12-12,12S0,18.617,0,12,5.383,0,12,0s12,5.383,12,12Zm-2,0c0-5.514-4.486-10-10-10S2,6.486,2,12s4.486,10,10,10,10-4.486,10-10Z"/>
                                     </svg>
-                                </a>
+                                    Accepter
+                                </x-nav-link>
                             </td>
                         </tr>
                         <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -167,19 +167,20 @@
                             </td>
                             <td class="px-6 py-4 flex justify-center">
                                 <!-- Modal toggle -->
-                                <a href="{{route('admin.asker.detail')}}" class="font-medium mx-4 text-primary dark:text-blue-500 hover:underline">
+                                <x-nav-link href="" class="font-medium mx-4 text-primary dark:text-blue-500 hover:underline">
                                     <?xml version="1.0" encoding="UTF-8"?>
                                     <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="w-4 h-4">
                                         <path d="M21,0H3C1.35,0,0,1.35,0,3V24H24V3c0-1.65-1.35-3-3-3ZM12,5c.83,0,1.5,.67,1.5,1.5s-.67,1.5-1.5,1.5-1.5-.67-1.5-1.5,.67-1.5,1.5-1.5Zm2,14h-2v-7h-2v-2h2c1.1,0,2,.9,2,2v7Z"/>
                                     </svg>
-
-                                </a>
-                                <a href="#" type="button" data-modal-show="editUserModal" class="font-medium text-secondary dark:text-blue-500">
+                                    Details
+                                </x-nav-link>
+                                <x-nav-link href="#" type="button" data-modal-show="editUserModal" class="font-medium text-secondary dark:text-blue-500">
                                     <?xml version="1.0" encoding="UTF-8"?>
                                     <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24" class="w-4 h-4">
                                         <path d="m16.298,8.288l1.404,1.425-5.793,5.707c-.387.387-.896.58-1.407.58s-1.025-.195-1.416-.585l-2.782-2.696,1.393-1.437,2.793,2.707,5.809-5.701Zm7.702,3.712c0,6.617-5.383,12-12,12S0,18.617,0,12,5.383,0,12,0s12,5.383,12,12Zm-2,0c0-5.514-4.486-10-10-10S2,6.486,2,12s4.486,10,10,10,10-4.486,10-10Z"/>
                                     </svg>
-                                </a>
+                                    Accepter
+                                </x-nav-link>
                             </td>
                         </tr>
                         @endforelse

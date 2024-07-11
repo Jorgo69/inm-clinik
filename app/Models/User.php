@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -64,5 +65,24 @@ class User extends Authenticatable implements MustVerifyEmail
     public function checkAccount(): BelongsTo
     {
         return $this->belongsTo(CheckAccount::class, 'asker_id');
+    }
+
+    /** Relation entre user et clinic
+     * ici une table pivot sera vu que c'est ManyToMany
+     * entre les deux users et clinics
+     * donc a la fin on passe le nom de la table pivot ici [clinic_user]
+     */
+    public function clinics(): BelongsToMany
+    {
+        return $this->belongsToMany(Clinic::class, 'user_clinic');
+    }
+
+    /** 
+     * Relation entre user et role
+     * avec un champs supplement [clinic_id]
+     */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'roles_users')->withPivot('clinic_id');
     }
 }

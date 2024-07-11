@@ -15,7 +15,7 @@ class AdminSystemMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(auth()->user()->role === 'admin...systeme')
+        if(auth()->user()->role === 'admin...system')
         {
             return $next($request);
         }else{

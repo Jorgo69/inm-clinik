@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
@@ -42,5 +43,19 @@ class Clinic extends Model
     {
         // return Storage::url($this->clinic_logo);
         return Storage::disk('public')->url($this->clinic_logo);
+    }
+
+    /** Relation entre clinic et user
+     * ici une table pivot sera vu que c'est ManyToMany
+     * entre les deux clincs et users
+     * donc a la fin on passe le nom de la table pivot ici [user_clinic]
+     */
+    public function users(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'user_clinic');
+    }
+
+    public function roles() {
+        return $this->hasMany(Role::class);
     }
 }
