@@ -6,7 +6,8 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Ma Clinik') }}</title>
-        {{-- <link rel="Icône de raccourci" href="{{asset('assets/svg/logo.svg')}}" type="image/x-icon"> --}}
+        @stack('card-image-center')
+        @stack('card-image-left')
 
         <!-- Fonts -->
         {{-- <link rel="preconnect" href="https://fonts.bunny.net"> --}}

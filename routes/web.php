@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AskingController as AdminAskingController;
 use App\Http\Controllers\Director\AskingController;
+use App\Http\Controllers\Director\ClinicController;
 use App\Http\Controllers\Essay\EssayController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -10,21 +11,28 @@ use Illuminate\Support\Facades\Route;
 // Try - Accueil 
 Route::get('/', [EssayController::class, 'homeIndex'])->name('home.index');
 Route::post('/try/ask', [EssayController::class, 'store'])->name('try.ask.post');
-Route::get('/director/menu', function(){
-    return view('director.menu');
-})->name('direcor.menu.index');
+// Route::get('/director/menu', function(){
+//     return view('director.menu');
+// })->name('direcor.menu.index');
+
+// Auth - Director Ressource
+Route::middleware(['auth', 'director'])->group( function() {
+    // Index du menu ou sont liste les cliniques
+    Route::get('/director/menu', [ClinicController::class, 'index'])->name('direcor.menu.index');
+
+    // Detail clinique
+    Route::get('director/menu/{id}/clinic/detail', [ClinicController::class, 'show'])->name('director.clinic.detail');
+
+    // Inscription de clinique - Post
+    Route::post('director/menu/add/clinic', [ClinicController::class, 'store'])->name('director/add/clinic');
+
+});
 
 
 Route::middleware(['auth', 'admin.systeme'])->group( function() {
     Route::get('/admin/askers/index', [AdminAskingController::class, 'index'])->name('admin.asker.index');
     Route::get('/admin/askers/{asker_id}/detail',[AdminAskingController::class, 'show'])->name('admin.asker.detail');
     Route::put('/admin/askers/put',[AdminAskingController::class, 'edit'])->name('admin.asker.validate');
-    // Route::get('/admin/askers/index', function() {
-    //     return view('adminSystem.askers');
-    // })->name('admin.asker.index');
-    // Route::get('/admin/askers/detail', function() {
-    //     return view('adminSystem.asker-detail');
-    // })->name('admin.asker.detail');
 });
 
 // Auth

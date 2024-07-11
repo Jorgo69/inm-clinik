@@ -2,5 +2,5 @@
     <path d="M13 16h-1v-4h1m0-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
     </path>
   </svg>
-  <p class="text-xs font-semibold">Success - {{ Session::get('success') }}!</p>
+  <p class="text-xs font-semibold">Success - {!! Session::get('success') !!}!</p>
 </div>
