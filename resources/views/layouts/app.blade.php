@@ -19,7 +19,9 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
+            @if (auth()->user()->role !== 'patient')
             @include('layouts.sidebar')
+            @endif
             {{-- @include('layouts.mobile-navigation') --}}
             
 

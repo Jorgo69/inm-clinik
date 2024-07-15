@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -72,9 +73,20 @@ class User extends Authenticatable implements MustVerifyEmail
      * entre les deux users et clinics
      * donc a la fin on passe le nom de la table pivot ici [clinic_user]
      */
-    public function clinics(): BelongsToMany
+    public function clinicsUsers(): BelongsToMany
     {
-        return $this->belongsToMany(Clinic::class, 'user_clinic');
+        return $this->belongsToMany(Clinic::class, 'clinic_user')
+                                    ->withPivot('adder_id')
+                                    ->withTimestamps();
+    }
+    /** pour avoir le nombre total de cet users dans les clinique
+     * 
+     * $user = User::find(1); // Trouvez un utilisateur spécifique
+    *  $count = $user->countClinicsUsers();
+     */
+    public function countClinicsUsers()
+    {
+        return $this->clinicsUsers()->count();
     }
 
     /** 
@@ -85,4 +97,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany(Role::class, 'roles_users')->withPivot('clinic_id');
     }
+
+    /** 
+     * Pour devenir membre
+     * Has Many parce que [peut etre fait par plusieur personne]
+     */
+
+     public function membershipRequests() : HasMany
+     {
+        return $this->hasMany(RequestToBecomeClinicMember::class, 'asker_id');
+     }
 }

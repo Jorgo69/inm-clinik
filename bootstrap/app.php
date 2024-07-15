@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Middleware\AdminSystemMiddleware;
+use App\Http\Middleware\CheckAccountMiddleware;
 use App\Http\Middleware\DirectorMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -16,6 +17,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin.system' => AdminSystemMiddleware::class,
             'director' => DirectorMiddleware::class,
+            'check_account_activated' => CheckAccountMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,16 +47,38 @@ class Clinic extends Model
     }
 
     /** Relation entre clinic et user
-     * ici une table pivot sera vu que c'est ManyToMany
+     * ici une table pivot sera vu que c'est BelongsToMany
      * entre les deux clincs et users
      * donc a la fin on passe le nom de la table pivot ici [user_clinic]
      */
-    public function users(): BelongsToMany
+    public function usersClincs(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_clinic');
+        return $this->belongsToMany(User::class, 'clinic_user')
+                    ->withPivot('adder_id')
+                    ->withTimestamps();
+    }
+    /** pour avoir le nombre total de clinique depuis model Clinic
+     * Utilisation
+     * $clinic = Clinic::find(1); // Trouvez une clinique spécifique
+    *  $count = $clinic->countUsersClinics();
+     * 
+     */
+    public function countUsersClinics()
+    {
+        return $this->usersClincs()->count();
     }
 
     public function roles() {
         return $this->hasMany(Role::class);
     }
+
+    /**
+     * Concernant la clinique a laquelle la demande d'adhesion est adresse
+     * Has Many parce que [peut etre fait pour plusieur clinique]
+     */
+
+     public function membershipRequests(): HasMany
+     {
+        return $this->hasMany(RequestToBecomeClinicMember::class, 'id');
+     }
 }

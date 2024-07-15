@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Clinic;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ClinicController extends Controller
@@ -31,6 +32,7 @@ class ClinicController extends Controller
 
         return view('director.menu', [
             'clinics' => $clinics,
+            'adder' => $this->adder(),
         ]);
     }
 
@@ -81,8 +83,15 @@ class ClinicController extends Controller
         $addClinic->clinic_number = $request->clinic_number;
         $addClinic->adder_id = $adder->id;
 
+        if($this->adder()->role === 'patient')
+        {
+            // on met le disk suivi du chemin [dynamique donc on va se base sur les donne envoyer de la base de donne]
+            Storage::disk('public')->delete($logoPath);
+            return back()->with('warning', 'Vous n\'avez pas les autorisation pour finaliser ce processus ');
+        }
+
         $addClinic->save();
-        return back()->with('success', 'Votre clinique <span class=\' text-xl font-bold underline underline-offset-8 \' >' .$request->clinic_name. '</span> est inscrit avec success ');
+        return back()->with('success', 'Votre clinique <span class=\' font-bold underline underline-offset-8 \' >' .$request->clinic_name. '</span> est inscrit avec success ');
     }
 
     /**
@@ -117,8 +126,11 @@ class ClinicController extends Controller
     {
         $clinic = Clinic::find($id);
 
+        $clinicCount = $clinic->countUsersClinics();
+
         return view('director.clinic-detail', [
             'clinic' => $clinic,
+            'clinicCount' => $clinicCount,
         ]);
     }
 

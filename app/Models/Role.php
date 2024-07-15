@@ -12,6 +12,12 @@ class Role extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'role_name',
+        'role_description',
+        'creator_id',
+    ];
+
     /** Relation entre role et user
      * ici une table pivot sera vu que c'est ManyToMany
      * entre les deux roles et users
@@ -20,7 +26,7 @@ class Role extends Model
     
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'roles_users')->withPivot('clinic_id');
+        return $this->belongsToMany(User::class, 'role_user')->withPivot('clinic_id');
     }
 
     /** Relation entre role et clinic

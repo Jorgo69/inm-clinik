@@ -4,16 +4,44 @@ namespace App\Http\Controllers\Director;
 
 use App\Http\Controllers\Controller;
 use App\Models\CheckAccount;
+use App\Models\RequestToBecomeClinicMember;
 use Illuminate\Http\Request;
 
 class AskingController extends Controller
 {
+    /** Recuperer le user connecter */
+    private function adder()
+    {
+        $adder = auth()->user();
+        return $adder;
+    }
+
+    /** Recuperer l'id de celui qui a ajouter la clinique */
+    private function clinicAdding()
+    {
+        $clinicAdding = \App\Models\Clinic::where('adder_id', $this->adder()->id)
+                        ->pluck('id')            
+                        ->first();
+
+        if(!$clinicAdding){
+            return null;
+        }
+        return $clinicAdding;
+    }
+
     /**
-     * Display a listing of the resource.
+     * Pour afficher le tableau des users qui veulent rejoindre une clinique.
      */
     public function index()
     {
-        //
+        $askers = RequestToBecomeClinicMember::with(['askers', 'clinics'])
+                    ->where('clinic_id', $this->clinicAdding())
+                    ->orderByDesc('created_at')
+                    ->get();
+
+        return view('director.asking.asker', [
+            'askers' => $askers,
+        ]);
     }
 
     /**
@@ -84,7 +112,11 @@ class AskingController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $asker = RequestToBecomeClinicMember::find($id);
+
+        return view('director.asking.asker-detail', [
+            'asker' => $asker,
+        ]);
     }
 
     /**
@@ -96,11 +128,29 @@ class AskingController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Approuver le user a appartenir a cette clinique.
      */
     public function update(Request $request, string $id)
     {
-        //
+        $asking = RequestToBecomeClinicMember::find($id);
+        $clinicId = $asking->clinic_id;
+
+        $clinicId = $asking->clinic_id;
+        $askerId = $asking->asker_id;
+
+        $clinic = \App\Models\Clinic::find($clinicId);
+
+        if (!$clinic) {
+            abort(403);
+        }
+        
+        $clinic->usersClincs()->attach($askerId, ['adder_id' => $this->adder()->id]);
+
+        $asking->statut = 'validated';
+
+        $asking->update();
+
+        return back()->with('success', 'Membre approuver avec success');
     }
 
     /**
