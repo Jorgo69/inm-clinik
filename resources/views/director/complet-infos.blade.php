@@ -36,13 +36,21 @@
                         <div class="relative z-0 w-full mb-5 group active">
                             <x-input-label for="files" :value="__('Televerser vos fichier')" />
                             <input type="file" name="files[]" multiple class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100 "/>
-                            {{-- <x-text-input id="files" class="block mt-1 w-full" type="file" name="files[]" multiple/> --}}
-                            <x-input-error :messages="$errors->get('files[]')" class="mt-2" />
+                            {{-- <x-input-error :messages="$errors->get('files')" class="mt-2" /> --}}
+                                @if ($errors->has('files'))
+                                <x-input-error :messages="$errors->get('files')" class="mt-2" />
+                                @elseif ($errors->has('files.*'))
+                                    <ul class="mt-2 text-sm text-red-600">
+                                        @foreach ($errors->get('files.*') as $message)
+                                            <li>{{ $message[0] }}</li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                         </div>
                         <div class="grid md:grid-cols-2 md:gap-6">
                             <div class="relative z-0 w-full mb-5 group">
-                                <x-input-label for="number" :value="__('Televerser vos fichier')" />
-                                <x-text-input id="number" class="block mt-1 w-full" type="number" name="number" :value="old('name')"  />
+                                <x-input-label for="phone" :value="__('Votre numero de telephone')" />
+                                <x-text-input id="phone" class="block mt-1 w-full" type="tel" name="number" :value="old('name')"  />
                                 <x-input-error :messages="$errors->get('number')" class="mt-2" />
                             </div>
                             <div class="relative z-0 w-full mb-5 group">
@@ -54,8 +62,58 @@
                         <x-primary-button>
                             Soumettre
                         </x-primary-button>
+
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var input = document.querySelector("#phone");
+                                window.intlTelInput(input, {
+                                    initialCountry: "auto",
+                                    geoIpLookup: function (success, failure) {
+                                        fetch('https://ipinfo.io/json')
+                                            .then(response => response.json())
+                                            .then(data => success(data.country))
+                                            .catch(() => success('us'));
+                                    },
+                                    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+                                });
+                            });
+                        </script>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function () {
+                                var input = document.querySelector("#phone");
+                                var iti = window.intlTelInput(input, {
+                                    initialCountry: "auto",
+                                    geoIpLookup: function (success, failure) {
+                                        fetch('https://ipinfo.io/json')
+                                            .then(response => response.json())
+                                            .then(data => success(data.country))
+                                            .catch(() => success('us'));
+                                    },
+                                    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+                                });
+                            
+                                document.querySelector('form').addEventListener('submit', function() {
+                                    var numberInput = document.querySelector("#phone");
+                                    if (iti.isValidNumber()) {
+                                        numberInput.value = iti.getNumber();
+                                    } else {
+                                        alert('Invalid phone number.');
+                                        return false;
+                                    }
+                                });
+                            });
+                        </script>
+                            
+                            
             </form>
         </div>
     </div>
+
+    @push('hrefCDN')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+    @endpush
+    @push('srcCDN')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    @endpush
 
 </x-app-layout>

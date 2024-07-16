@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Patient;
+namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ClinicController extends Controller
+class PatientController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Affichage de la liste des patients de la clinique.
      */
     public function index()
     {
-        //
+        return view('member.patient.patient-index');
     }
 
     /**
@@ -36,12 +36,7 @@ class ClinicController extends Controller
      */
     public function show(string $id)
     {
-        $clinic = \App\Models\Clinic::find($id);
-
-        return view('patient.clinic-detail', [
-            'clinic' => $clinic,
-        ]);
-
+        //
     }
 
     /**

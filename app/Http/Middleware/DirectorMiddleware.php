@@ -15,6 +15,10 @@ class DirectorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if(auth()->user()->role === 'patient')
+        {
+            abort(403, 'Vous n\'avez pas les autorisations requise pour acceder');
+        }
         return $next($request);
     }
 }

@@ -17,17 +17,19 @@ class CheckAccountMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         $user = auth()->user();
-        if($user)
-        {
-            // recuperer le user connecter
+        if ($user) {
+            // Récupérer l'utilisateur connecté
             $checkAccount = CheckAccount::where('asker_id', $user->id)->first();
-            if($checkAccount && $checkAccount->actived === 'validator')
-            {
+        
+            // Vérifier si le compte est activé ou si l'utilisateur est un administrateur
+            if (($checkAccount && $checkAccount->actived === 'validator') || $user->role === 'admin...system') {
                 return $next($request);
             }
         }
 
-        return abort(403, 'Votre compte n\'est pas active veuillez l\'activer');
+        $message = "Votre compte n'est pas activé. Veuillez l'activer.<br>
+                    Si vous avez déjà soumis vos infos, veuillez patienter.";
+        return abort(403, $message);
         
     }
 }

@@ -8,6 +8,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Director\AskingController as DirectorAskingController;
 use App\Http\Controllers\Director\ClinicController;
 use App\Http\Controllers\Essay\EssayController;
+use App\Http\Controllers\Member\ConsultationController as MemberConsultationController;
+use App\Http\Controllers\Member\PatientController as MemberPatientController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +21,19 @@ Route::post('/try/ask', [EssayController::class, 'store'])->name('try.ask.post')
 //     return view('director.menu');
 // })->name('direcor.menu.index');
 
+// Auth - Member Ressource
+Route::middleware(['auth'])->group( function() {
+    // liste des patients
+    Route::get('/member/patient/liste', [MemberPatientController::class, 'index'])->name('member.patient.index');
+
+    // liste des consultations
+    Route::get('/member/consultations/liste', [MemberConsultationController::class, 'index'])->name('member.consultation.index');
+});
+
+Route::get('/clinic', function(){
+    return view('clinic.index');
+});
+
 
 // Auth - Patient Ressource
 Route::get('patient/clinic/detail/{clinic_id}', [PatientClinicController::class, 'show'])->name('patient.clinic.detail');
@@ -29,7 +44,7 @@ Route::post('/asking/become/clinic/member', [PatientAskingController::class, 'st
 // Auth - Director Ressource
 Route::middleware(['auth', 'director'])->group( function() {
     // Index du menu ou sont liste les cliniques
-    Route::get('/director/menu', [ClinicController::class, 'index'])->name('direcor.menu.index')->middleware('check_account_activated');
+    Route::get('/director/menu', [ClinicController::class, 'index'])->name('direcor.menu.index');
 
     // Detail clinique
     Route::get('director/menu/{id}/clinic/detail', [ClinicController::class, 'show'])->name('director.clinic.detail');

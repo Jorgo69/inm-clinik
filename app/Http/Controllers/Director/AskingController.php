@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CheckAccount;
 use App\Models\RequestToBecomeClinicMember;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class AskingController extends Controller
 {
@@ -27,6 +28,11 @@ class AskingController extends Controller
             return null;
         }
         return $clinicAdding;
+    }
+
+    private function storeMultipleFile()
+    {
+
     }
 
     /**
@@ -61,8 +67,8 @@ class AskingController extends Controller
             'complet_name' => ['required', 'string', 'max:255'],
             'matricule' => ['required', 'string', 'max:255'],
             'adresse' => ['required', 'string', 'max:255'],
-            'files.*' => ['required', 'image', 'mimes:jpg,jpeg,png'],
-            'number' => ['required', 'string', 'max:255'],
+            'files.*' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
+            'number' => ['required', 'numeric',],
             // 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.CheckAccount::class],
         ]);
         
@@ -76,9 +82,11 @@ class AskingController extends Controller
                 $userFullName = $director->name . "_" . $director->firstname;
                 $fileName = $userFullName . "_" . now()->format('YmdHis') . "." . $file->getClientOriginalExtension();
 
-                $file->storeAs('admin/checkAccount', $fileName);
+                $file->storeAs('admin/checkAccount', $fileName, 'public');
                 $filesPaths[] = 'admin/checkAccount/' . $fileName;
-            }
+        }
+
+
             // dd($filesPaths);
 
         // $critere puisse que la methode updateOrCreate se basera dessus pour savoir 
@@ -95,15 +103,13 @@ class AskingController extends Controller
             'matricule' => $request->matricule,
             'adresse' => $request->adresse,
         ];
-
-        // dd($data);
+    Storage::disk('public')->delete($filesPaths);
         
             CheckAccount::updateOrCreate($critere, $data);
 
         return back()->with(['success' => 'Fichiers téléchargés et informations enregistrées avec succès'], 200);
     }
-
-    return back()->with(['error' => 'Aucun fichier à télécharger'], 400);
+    return back()->with(['warning' => 'Aucun fichier à télécharger'], 400);
 
     }
 
