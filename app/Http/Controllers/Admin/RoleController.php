@@ -52,7 +52,7 @@ class RoleController extends Controller
     {
         $request->validate([
             'role_name' => ['required', 'string', 'min:5'],
-            'role_description' => ['required', 'string', 'min:5'],
+            'role_description' => ['required', 'string', 'max:255', 'min:5'],
         ]);
 
         $addRole = new Role();

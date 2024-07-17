@@ -1,4 +1,13 @@
-<x-app-layout>
+@extends('layouts.app')
+  
+{{-- Side Nav Members --}}
+@section('layouts-sidebar')
+  @include('layouts.sidebar')
+@endsection
+
+{{-- Contenu propore a ce fichier --}}
+@section('app-container')
+
     <div class="p-4 sm:ml-64">
         <x-aside>
           @if (session('success'))
@@ -115,4 +124,5 @@
       </div>
       </x-aside>
     </div>
-</x-app-layout>
+
+  @endsection

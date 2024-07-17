@@ -1,17 +1,21 @@
 <?php
 
-use App\Http\Controllers\Admin\AskingController as AdminAskingController;
-use App\Http\Controllers\Patient\ClinicController as PatientClinicController;
-use App\Http\Controllers\Patient\AskingController as PatientAskingController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\Director\AskingController as DirectorAskingController;
-use App\Http\Controllers\Director\ClinicController;
-use App\Http\Controllers\Essay\EssayController;
-use App\Http\Controllers\Member\ConsultationController as MemberConsultationController;
-use App\Http\Controllers\Member\PatientController as MemberPatientController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Essay\EssayController;
+use App\Http\Controllers\Director\ClinicController;
+use App\Http\Controllers\Patient\SettingController as PatientSettingController;
+use App\Http\Controllers\Admin\AskingController as AdminAskingController;
+use App\Http\Controllers\Member\PatientController as MemberPatientController;
+use App\Http\Controllers\Patient\AskingController as PatientAskingController;
+use App\Http\Controllers\Patient\ClinicController as PatientClinicController;
+use App\Http\Controllers\Director\AskingController as DirectorAskingController;
+use App\Http\Controllers\Member\ConsultationController as MemberConsultationController;
+use App\Http\Controllers\Member\DoctorController as MemberDoctorController;
+use App\Http\Controllers\Member\PersonalController as MemberPersonalController;
+use App\Http\Controllers\Member\SecretaryController as MemberSecretaryController;
 
 // Ressource Try Folder
 // Try - Accueil 
@@ -23,11 +27,33 @@ Route::post('/try/ask', [EssayController::class, 'store'])->name('try.ask.post')
 
 // Auth - Member Ressource
 Route::middleware(['auth'])->group( function() {
+
+    // Vu Secretaire Prise de RDV
+    Route::get('/member/secretary/take/appointment/{clinic_id}', [MemberSecretaryController::class, 'index'])->name('member.secretary.index');
+
+
     // liste des patients
-    Route::get('/member/patient/liste', [MemberPatientController::class, 'index'])->name('member.patient.index');
+    Route::get('/member/patient/liste/{clinic_id}', [MemberPatientController::class, 'index'])->name('member.patient.index');
+
+    // liste info patient - detail a travail les deux Id Clinique et Patient
+    Route::get('/member/patient/liste/{clinic_id}/{patient_id}', [MemberPatientController::class, 'show'])->name('member.patient.show.detail');
 
     // liste des consultations
-    Route::get('/member/consultations/liste', [MemberConsultationController::class, 'index'])->name('member.consultation.index');
+    Route::get('/member/consultations/liste/{clinic_id}', [MemberConsultationController::class, 'index'])->name('member.consultation.index');
+
+    // detail consultation specifique pour prise de note
+    Route::get('/member/consultation/espace/detail/patient/{consultation_patient_id}', [MemberConsultationController::class, 'show'])->name('member.consultation.detail.show');
+
+    // liste du personnel de la clinique avec son Id
+    Route::get('/member/personal/liste/{clinic_id}', [MemberPersonalController::class, 'index'])->name('member.personal.index');
+    
+
+    // liste personnel - detail a travers Id
+    Route::get('/member/personal/detail/{clinic_id}/{personal_id}', [MemberPersonalController::class, 'show'])->name('member.personal.detail');
+
+    // Doctor - Only
+    // vue - index
+    Route::get('/member/doctor/', [MemberDoctorController::class, 'index'])->name('member.doctor.index');
 });
 
 Route::get('/clinic', function(){
@@ -36,8 +62,16 @@ Route::get('/clinic', function(){
 
 
 // Auth - Patient Ressource
-Route::get('patient/clinic/detail/{clinic_id}', [PatientClinicController::class, 'show'])->name('patient.clinic.detail');
-Route::post('/asking/become/clinic/member', [PatientAskingController::class, 'store'])->name('patient.asking.become.clinic.member');
+Route::middleware(['auth'])->group( function() {
+    // Vue indec-detail de la clique ou il faut faire sa demande
+    Route::get('patient/clinic/detail/{clinic_id}', [PatientClinicController::class, 'show'])->name('patient.clinic.detail');
+
+    // Demande pour devenir membre d'une clinique
+    Route::post('/asking/become/clinic/member', [PatientAskingController::class, 'store'])->name('patient.asking.become.clinic.member');
+
+    // Vue Index des parametre du patient
+    Route::get('/patient/seeting/index', [PatientSettingController::class, 'index'])->name('patient.setting.index');
+});
 
 
 
@@ -63,6 +97,9 @@ Route::middleware(['auth', 'director'])->group( function() {
 
     // Valider demande
     Route::put('/director/asker/clinique/validator/{asking_id}', [DirectorAskingController::class, 'update'])->name('director.asker.validator');
+
+    // Setings Index
+
 
 });
 

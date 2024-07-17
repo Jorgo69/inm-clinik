@@ -3,25 +3,24 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
-use App\Services\ClinicService;
 use Illuminate\Http\Request;
 
-class PatientController extends Controller
+class SecretaryController extends Controller
 {
     protected $myClinicIdService;
-    public function __construct(ClinicService $myClinicIdService)
+    public function __construct(\App\Services\ClinicService $myClinicIdService)
     {
         $this->myClinicIdService = $myClinicIdService;
     }
 
     /**
-     * Affichage de la liste des patients de la clinique.
+     * Affichage de la vue de prise de RDV de la secretaire.
      */
     public function index(int $id)
     {
         $clinic =  $this->myClinicIdService->ClinicIdService($id);
 
-        return view('member.patient.member-patient-index', [
+        return view('member.secretary.member-secretaire-index', [
             'clinic' => $clinic,
         ]);
     }
@@ -47,11 +46,7 @@ class PatientController extends Controller
      */
     public function show(string $id)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($id);
-
-        return view('member.patient.member-patient-detail', [
-            'clinic' => $clinic,
-        ]);
+        //
     }
 
     /**

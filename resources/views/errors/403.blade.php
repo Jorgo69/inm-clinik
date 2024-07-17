@@ -1,12 +1,13 @@
-<!--
-  This example requires updating your template:
+@extends('layouts.app')
+  
+{{-- Side Nav Members --}}
+@section('layouts-sidebar')
+  @include('layouts.sidebar')
+@endsection
 
-  ```
-  <html class="h-full">
-  <body class="h-full">
-  ```
--->
-<x-app-layout>
+{{-- Contenu propore a ce fichier --}}
+@section('app-container')
+
 <main class="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
     <div class="text-center">
       <p class="text-base font-semibold text-indigo-600">403</p>
@@ -18,4 +19,5 @@
       </div>
     </div>
   </main>
-</x-app-layout>  
+
+  @endsection

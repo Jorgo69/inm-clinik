@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
+use App\Models\Clinic;
+use App\Models\RequestToBecomeClinicMember;
+use App\Models\User;
 use App\Services\ClinicService;
 use Illuminate\Http\Request;
 
-class PatientController extends Controller
+class PersonalController extends Controller
 {
     protected $myClinicIdService;
     public function __construct(ClinicService $myClinicIdService)
@@ -14,24 +17,41 @@ class PatientController extends Controller
         $this->myClinicIdService = $myClinicIdService;
     }
 
+    /** Liste le personnel a travers l'id de la clinique */
+    private function personal(int $id)
+    {
+        $personals = RequestToBecomeClinicMember::with('askers')
+        ->where('statut', 'validated')
+        ->where('clinic_id', $id)
+        ->get();
+
+        return $personals;
+    }
+
+
     /**
-     * Affichage de la liste des patients de la clinique.
+     * Display a listing of the resource.
      */
     public function index(int $id)
     {
         $clinic =  $this->myClinicIdService->ClinicIdService($id);
 
-        return view('member.patient.member-patient-index', [
+        $personals =  $this->personal($id);
+        
+
+        return view('member.personal.member-personal-index', [
             'clinic' => $clinic,
+            'personals' => $personals,
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Pour l'attribution de role au personnel avec reponse.
      */
     public function create()
     {
-        //
+        
+        return back()->with('success', 'Role attribuer avec success');
     }
 
     /**
@@ -43,14 +63,20 @@ class PatientController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Affiche les details pour un membre specifique.
      */
     public function show(string $id)
     {
         $clinic =  $this->myClinicIdService->ClinicIdService($id);
 
-        return view('member.patient.member-patient-detail', [
+        $personal = $this->personal($id)->find($id);
+
+        $roles = \App\Models\Role::all();
+
+        return view('member.personal.member-personal-detail', [
             'clinic' => $clinic,
+            'personal' => $personal,
+            'roles' => $roles,
         ]);
     }
 
