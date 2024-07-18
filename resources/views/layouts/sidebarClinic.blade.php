@@ -53,7 +53,7 @@
                 </button>
                 <ul id="dropdown-secretaire-submenu" class="hidden py-2 space-y-2">
                     <li>
-                        <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                        <a href="{{route('member.secretary.create', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                         Ajouter RDV
                     </a>
                     </li>
@@ -102,7 +102,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                        <a href="{{route('director.member.doctor.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                             <x-svg-stethoscope-doctor />
                             <span class="mx-2">Docteur</span>
                         </a>
@@ -132,7 +132,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                        <a href="{{route('director.member.personal.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
                             <x-svg-hospital-secretary />
                             <span class="mx-2">Secretaire</span>
                         </a>

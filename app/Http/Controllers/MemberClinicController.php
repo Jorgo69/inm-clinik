@@ -2,27 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Clinic;
-use App\Services\ClinicService;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class MemberClinicController extends Controller
 {
-    protected $myClinicIdService;
-    public function __construct(ClinicService $myClinicIdService)
-    {
-        $this->myClinicIdService = $myClinicIdService;
-    }
-
     /**
-     * Le dashboard affichage de la vue
+     * Display a listing of the resource.
      */
     public function index()
     {
-        $clinics = Clinic::with('adder')->orderByDesc('created_at')->get();
+        $accepted = \App\Models\RequestToBecomeClinicMember::where('asker_id', auth()->user()->id)
+                                                            ->where('statut', 'validated')
+                                                            ->pluck('clinic_id');
 
+        $clinics = \App\Models\Clinic::where('id', $accepted)->get();
 
-        return view('dashboard', [
+        return view('member.clinics.member-clinic-index', [
             'clinics' => $clinics,
         ]);
     }

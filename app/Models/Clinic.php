@@ -22,7 +22,7 @@ class Clinic extends Model
         'clinic_mail',
         'clinic_number',
         'adder_id',
-        'vallidator_id',
+        'validator_id',
     ];
 
     /* 

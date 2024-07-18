@@ -24,9 +24,11 @@ class Role extends Model
      * donc a la fin on passe le nom de la table pivot ici [roles_users]
      */
     
-    public function users(): BelongsToMany
+    public function personalsClinics(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'role_user')->withPivot('clinic_id');
+        return $this->belongsToMany(User::class, 'role_user')
+                    ->withPivot('clinic_id', 'adder_id')
+                    ->withTimestamps();
     }
 
     /** Relation entre role et clinic

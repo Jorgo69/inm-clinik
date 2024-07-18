@@ -11,24 +11,45 @@
         <x-aside>
             {{-- Session - Alert --}}
             @if (session('success'))
-            @include('alerts.alert-success')                
+                @include('alerts.alert-success')
+            @elseif (session('info'))
+                @include('alerts.alert-info')
             @endif
           <div class="grid grid-cols-1 gap-12 mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {{-- Photo - Profil --}}
                 <div class="p-4 rounded-lg bg-blue-50 md:p-6 dark:bg-gray-800">
-                    <div class="flex flex-col items-center p-8">
+                    <div class="flex flex-col items-center">
                         {{-- <img src="" alt="" class="w-32 h-32 bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40"> --}}
                         <div class="w-32 h-32 text-center flex items-center justify-center text-5xl tracking-tighter font-bold bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40">
-                        {{substr($personal->askers->name, 0, 1)}}
-                        {{substr($personal->askers->firstname, 0, 1)}}
+                        {{substr($personal->name, 0, 1)}}
+                        {{substr($personal->firstname, 0, 1)}}
                         </div>
-                        <h1 class="mx-auto mt-6 text-center dark:bg-gray-700">{{$personal->askers->name .' '. $personal->askers->firstname}}</h1>
+                        <h1 class="mx-auto mt-6 text-center dark:bg-gray-700">
+                            {{$personal->name .' '. $personal->firstname}}
+                        </h1>
         
-                        {{-- <p class=""> --}}
+                        <p class="text-center">
+                            @if($currentPersonal->clinicUserRoles->isEmpty())
+                                <p>Aucun poste attribue.</p>
+                            @else
+                            @foreach ($currentPersonal->clinicUserRoles as $role)
+                                <span class="block my-4 font-semibold">
+                                Role: {{$role->role_name}}
+                                </span>
+                            @endforeach
+                            @endif
+                            @foreach ($currentPersonal->clinicsUsers as $clinic )
+                                Clinique: {{ $clinic->clinic_name }}
+                            @endforeach
                             
-                            <form class="mx-auto w-40 mt-4 text-center rounded-lg dark:bg-gray-700">
-                                <label for="underline_select" class="sr-only">Underline select</label>
-                                <select id="underline_select" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                        </p>
+
+                        @if($currentPersonal->clinicUserRoles->isEmpty())
+                            <form action="{{route('director.attribute.member.role', ['clinic_id' => $clinic->id, 'personal_id' =>  $personal->id])}}" method="POST" class="mx-auto w-40 mt-4 text-center rounded-lg dark:bg-gray-700">
+                                @csrf
+                                @method('POST')
+                                <label for="underline_select_role" class="sr-only">Attribution de Role</label>
+                                <select name="attribute_role" id="underline_select_role" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
                                     <option selected>Attribuer un Role</option>
                                     @forelse ($roles as $role)
                                     <option value="{{$role->id}}">{{$role->role_name}}</option>
@@ -36,10 +57,30 @@
                                     <option value="">Aucun Role disponible</option>
                                     @endforelse
                                 </select>
+                                
                                 <x-primary-button class="mt-4">
                                     Attribuer
                                 </x-primary-button>
                             </form>
+                        @else
+                        <form action="" class="mx-auto w-40 mt-4 text-center rounded-lg dark:bg-gray-700">
+                            @csrf
+                            @method('PUT')
+                            <label for="underline_select_role" class="sr-only">Attribution de Role</label>
+                            <select name="attribute_role" id="underline_select_role" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+                                <option selected>Attribuer un Role</option>
+                                @forelse ($roles as $role)
+                                <option value="{{$role->id}}">{{$role->role_name}}</option>
+                                @empty
+                                <option value="">Aucun Role disponible</option>
+                                @endforelse
+                            </select>
+                            
+                            <x-primary-button class="mt-4">
+                                Changer
+                            </x-primary-button>
+                        </form>
+                        @endif
   
                         {{-- </p> --}}
                         <div class="mt-4 ">

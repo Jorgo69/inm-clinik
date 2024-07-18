@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Member;
+namespace App\Http\Controllers\Director;
 
 use App\Http\Controllers\Controller;
-use App\Models\Clinic;
-use App\Models\RequestToBecomeClinicMember;
 use App\Models\User;
 use App\Services\ClinicService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class PersonalController extends Controller
+class MemberPersonalController extends Controller
 {
     protected $myClinicIdService;
     public function __construct(ClinicService $myClinicIdService)
@@ -18,10 +16,10 @@ class PersonalController extends Controller
         $this->myClinicIdService = $myClinicIdService;
     }
 
-    /** Liste le personnel a travers l'id de la clinique */
+    /** Liste du personnel a travers l'id de la clinique */
     private function personal(int $id)
     {
-        $personals = RequestToBecomeClinicMember::with('askers')
+        $personals = \App\Models\RequestToBecomeClinicMember::with('askers')
         ->where('statut', 'validated')
         ->where('clinic_id', $id)
         ->get();
@@ -29,24 +27,48 @@ class PersonalController extends Controller
         return $personals;
     }
 
-    private function personalRole(int $personal_id)
+    private function showRole(int $role_id)
     {
-        $user = \App\Models\User::with('clinicUserRoles')->findOrFail($personal_id);
-        return $user;
+        $showRole = \App\Models\Role::find($role_id);
+
+        $showRoleName = $showRole->role_name;
+        // dd($showRoleName);
+
+
+        if (!$showRoleName) {
+            return "Role not found";
+        }
+    
+        switch ($showRoleName) {
+            case 'Doctor':
+                return 'member-doctor';
+            case 'Secretary':
+                return 'member-secretary';
+            case 'Accountant':
+                return 'member-accountant';
+            case 'Nurse':
+                return 'member-nurse';
+            case 'Pharmacist':
+                return 'member-pharmacist';
+            // Ajoutez d'autres cas selon les rôles que vous avez
+            default:
+                return 'unknown-role';
+        }
+        
     }
 
 
     /**
      * Display a listing of the resource.
      */
-    public function index(int $id)
+    public function index(int $clinicId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($id);
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
 
-        $personals =  $this->personal($id);
+        $personals =  $this->personal($clinicId);
         
 
-        return view('member.personal.member-personal-index', [
+        return view('director.member.personal.member-personal-index' , [
             'clinic' => $clinic,
             'personals' => $personals,
         ]);
@@ -67,6 +89,13 @@ class PersonalController extends Controller
         $personal_id = $request->personal_id; // ID de la personne (utilisateur)
         $role_id = $request->attribute_role; // ID du rôle sélectionné
         $adder_id = Auth::id(); // ID de l'utilisateur qui fait l'ajout (l'administrateur ou directeur)
+
+        $role_member = $this->showRole($role_id);
+
+        $updateToMember = User::find($personal_id);
+        $updateToMember->role = $role_member;
+
+        $updateToMember->update();
 
         // Récupération de l'utilisateur à qui le rôle sera attribué
         $user = \App\Models\User::findOrFail($personal_id);
@@ -112,7 +141,7 @@ class PersonalController extends Controller
 
         $roles = \App\Models\Role::all();
 
-        return view('member.personal.member-personal-detail', [
+        return view('director.member.personal.member-personal-detail', [
             'clinic' => $clinic,
             'personal' => $personal,
             'roles' => $roles,

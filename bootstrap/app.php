@@ -3,6 +3,7 @@
 use App\Http\Middleware\AdminSystemMiddleware;
 use App\Http\Middleware\CheckAccountMiddleware;
 use App\Http\Middleware\DirectorMiddleware;
+use App\Http\Middleware\RedirectMemberDashboardMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -18,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin.system' => AdminSystemMiddleware::class,
             'director' => DirectorMiddleware::class,
             'check_account_activated' => CheckAccountMiddleware::class,
+            'redirect.member' => RedirectMemberDashboardMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -17,19 +17,26 @@ use App\Http\Controllers\Member\DoctorController as MemberDoctorController;
 use App\Http\Controllers\Member\PersonalController as MemberPersonalController;
 use App\Http\Controllers\Member\SecretaryController as MemberSecretaryController;
 
+// Director Controller
+use App\Http\Controllers\Director\MemberPersonalController as DirectorMemberPersonalController;
+use App\Http\Controllers\Director\MemberSecretaryController as DirectorMemberSecretaryController;
+use App\Http\Controllers\Director\MemberDoctorController as DirectorMemberDoctorController;
+use App\Http\Controllers\MemberClinicController;
+
 // Ressource Try Folder
 // Try - Accueil 
 Route::get('/', [EssayController::class, 'homeIndex'])->name('home.index');
 Route::post('/try/ask', [EssayController::class, 'store'])->name('try.ask.post');
-// Route::get('/director/menu', function(){
-//     return view('director.menu');
-// })->name('direcor.menu.index');
 
 // Auth - Member Ressource
 Route::middleware(['auth'])->group( function() {
 
     // Vu Secretaire Prise de RDV
     Route::get('/member/secretary/take/appointment/{clinic_id}', [MemberSecretaryController::class, 'index'])->name('member.secretary.index');
+    // Ajouter RDV - Secretaire
+    Route::get('member/secretary/take/appointment/create/{clinic_id}', [MemberSecretaryController::class, 'create'])->name('member.secretary.create');
+    // Vu detail RDV - Secretaire
+    Route::get('member/secretary/show/detail/appointment/{clinic_id}', [MemberSecretaryController::class, 'show'])->name('member.secretary.show.detail.appointment');
 
 
     // liste des patients
@@ -44,13 +51,13 @@ Route::middleware(['auth'])->group( function() {
     // detail consultation specifique pour prise de note
     Route::get('/member/consultation/espace/detail/patient/{consultation_patient_id}', [MemberConsultationController::class, 'show'])->name('member.consultation.detail.show');
 
-    // liste du personnel de la clinique avec son Id
-    Route::get('/member/personal/liste/{clinic_id}', [MemberPersonalController::class, 'index'])->name('member.personal.index');
+    // vu clinique appartient
+    Route::get('/member/group/clinics/index', [MemberClinicController::class, 'index'])->name('member.group.clinic.index');
+
+    Route::get('director/menu/{clinic_id}/clinic/detai', [ClinicController::class, 'show'])->name('member-director.clinic.detail');
+
+
     
-
-    // liste personnel - detail a travers Id
-    Route::get('/member/personal/detail/{clinic_id}/{personal_id}', [MemberPersonalController::class, 'show'])->name('member.personal.detail');
-
     // Doctor - Only
     // vue - index
     Route::get('/member/doctor/', [MemberDoctorController::class, 'index'])->name('member.doctor.index');
@@ -97,6 +104,32 @@ Route::middleware(['auth', 'director'])->group( function() {
 
     // Valider demande
     Route::put('/director/asker/clinique/validator/{asking_id}', [DirectorAskingController::class, 'update'])->name('director.asker.validator');
+
+    // Creer un Role
+    Route::post('director/role/member/attribute', [DirectorMemberPersonalController::class, 'create'])->name('director.attribute.member.role');
+
+    //  Clinique Specifique - Start
+
+    // Personel - Ressource - Start
+
+    // liste du personnel de la clinique avec son Id
+    Route::get('/member/personal/list/{clinic_id}', [DirectorMemberPersonalController::class, 'index'])->name('member.personal.index');
+    
+
+    // liste personnel - detail a travers Id
+    Route::get('/member/personal/detail/{clinic_id}/{personal_id}', [DirectorMemberPersonalController::class, 'show'])->name('member.personal.detail');
+
+    // Personel - Ressource - End
+
+    // Secretaire - Ressource - Start
+    Route::get('director/member/secretary/list/{clinic_id}', [DirectorMemberSecretaryController::class, 'index'])->name('director.member.personal.index');
+    // Secretaire - Ressource - End
+
+    // Doctor - Ressource - Start
+    Route::get('/director/member/doctor/list/{clinic_id}', [DirectorMemberDoctorController::class, 'index'])->name('director.member.doctor.index');
+    // Doctor - Ressource - End
+
+    //  Clinique Specifique - End
 
     // Setings Index
 
@@ -150,7 +183,7 @@ Route::get('/contact-us', function() {
 
 // Auth - Ressource
 
-Route::middleware(['auth', 'verified'])->group( function() {
+Route::middleware(['auth', 'verified', 'redirect.member'])->group( function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 });

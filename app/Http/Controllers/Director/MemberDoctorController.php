@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Director;
 
-use App\Models\Clinic;
+use App\Http\Controllers\Controller;
 use App\Services\ClinicService;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+class MemberDoctorController extends Controller
 {
+    
     protected $myClinicIdService;
     public function __construct(ClinicService $myClinicIdService)
     {
@@ -15,15 +16,26 @@ class DashboardController extends Controller
     }
 
     /**
-     * Le dashboard affichage de la vue
+     * Display a listing of the resource.
      */
-    public function index()
+    public function index(int $clinicId)
     {
-        $clinics = Clinic::with('adder')->orderByDesc('created_at')->get();
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
 
+        // $personals = $this->personal($clinicId);
+        // dd($secretaries);
+        
+        $role = \App\Models\Role::where('role_name', 'docteur')->firstOrFail();
 
-        return view('dashboard', [
-            'clinics' => $clinics,
+        // Récupérer les utilisateurs ayant ce rôle
+        $doctors = \App\Models\User::whereHas('clinicUserRoles', function($query) use ($role, $clinicId) {
+            $query->where('role_id', $role->id);
+            $query->where('clinic_id', $clinicId);
+        })->get();
+
+        return view('director.member.doctor.director-doctor-index', [
+            'clinic' => $clinic,
+            'doctors' => $doctors,
         ]);
     }
 

@@ -28,9 +28,13 @@ class SecretaryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($clinicId)
     {
-        //
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+
+        return view('member.secretary.member-secretaire-index', [
+            'clinic' => $clinic,
+        ]);
     }
 
     /**
@@ -44,9 +48,13 @@ class SecretaryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $clinicId)
     {
-        //
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+
+        return view('member.secretary.member-secretaire-show-detail', [
+            'clinic' => $clinic,
+        ]);
     }
 
     /**

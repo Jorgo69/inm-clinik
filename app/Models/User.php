@@ -90,12 +90,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /** 
-     * Relation entre user et role
-     * avec un champs supplement [clinic_id]
+     * Relation entre User et Role -- users --roles
+     * avec champs supplement [clinic_id, adder_id]
      */
-    public function roles(): BelongsToMany
+    public function clinicUserRoles(): BelongsToMany
     {
-        return $this->belongsToMany(Role::class, 'roles_users')->withPivot('clinic_id');
+        return $this->belongsToMany(Role::class, 'role_user')
+                    ->withPivot('clinic_id', 'adder_id')
+                    ->withTimestamps();
     }
 
     /** 
