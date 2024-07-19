@@ -18,7 +18,7 @@ class MemberClinicController extends Controller
         $clinics = \App\Models\Clinic::where('id', $accepted)->get();
 
         return view('member.clinics.member-clinic-index', [
-            'clinics' => $clinics,
+            'clinics' => $accepted,
         ]);
     }
 

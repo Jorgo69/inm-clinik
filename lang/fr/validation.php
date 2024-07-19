@@ -33,7 +33,7 @@ return [
     ],
     'boolean' => 'The :attribute field must be true or false.',
     'can' => 'The :attribute field contains an unauthorized value.',
-    'confirmed' => 'The :attribute field confirmation does not match.',
+    'confirmed' => 'La confirmation du champ ne correspond pas.',
     'contains' => 'The :attribute field is missing a required value.',
     'current_password' => 'Le Mot de Passe est Incorrect.',
     'date' => 'The :attribute field must be a valid date.',

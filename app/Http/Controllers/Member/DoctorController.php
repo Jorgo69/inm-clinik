@@ -7,20 +7,33 @@ use Illuminate\Http\Request;
 
 class DoctorController extends Controller
 {
+    protected $myClinicIdService;
+    public function __construct(\App\Services\ClinicService $myClinicIdService)
+    {
+        $this->myClinicIdService = $myClinicIdService;
+    }
     /**
      * Affichage specifique au doctor d'une clinique.
      */
-    public function index()
+    public function index(int $clinicId)
     {
-        return view('member.doctor.doctor-index');
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+
+        return view('member.doctor.member-doctor-index', [
+            'clinic' => $clinic,
+        ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(int $clinicId)
     {
-        //
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+
+        return view('member.doctor.member-doctor-appointment-index', [
+            'clinic' => $clinic,
+        ]);
     }
 
     /**

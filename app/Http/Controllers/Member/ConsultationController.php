@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class ConsultationController extends Controller
 {
     protected $myClinicIdService;
+    
     public function __construct(ClinicService $myClinicIdService)
     {
         $this->myClinicIdService = $myClinicIdService;
@@ -17,9 +18,10 @@ class ConsultationController extends Controller
     /**
      * Liste des consultations.
      */
-    public function index(int $id)
+    public function index(int $clinicId)
     {
-        $clinic = $clinic =  $this->myClinicIdService->ClinicIdService($id);
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+
         return view('member.consultation.consultation-index', [
             'clinic' => $clinic,
         ]);
@@ -44,10 +46,12 @@ class ConsultationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $clinicId, int $patientId)
     {
+        $clinic = $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        
         return view('member.consultation.consultation-detail-show', [
-            $id => 1,
+            'clinic' => $clinic,
         ]);
     }
 

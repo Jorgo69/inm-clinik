@@ -19,7 +19,18 @@
                     <div class="w-32 h-32 text-center flex items-center justify-center text-5xl tracking-tighter font-bold bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40">
                       JL
                     </div>
-                    <h1 class="w-40 h-2 mx-auto mt-6 text-center rounded-lg dark:bg-gray-700">Exemple</h1>
+                    <p class="mx-auto mt-6 text-center rounded-lg dark:bg-gray-700">
+                        Nom Prenom
+                    </p>
+                    <p class="mx-auto mt-6 text-center rounded-lg dark:bg-gray-700">
+                        Email
+                    </p>
+                    <p class="mx-auto mt-6 text-center rounded-lg dark:bg-gray-700">
+                        Adresse
+                    </p>
+                    <p class="mx-auto mt-6 text-center rounded-lg dark:bg-gray-700">
+                        Antecedent
+                    </p>
     
                     <p class="mx-auto mt-4 text-center rounded-lg dark:bg-gray-700">
                         
@@ -35,26 +46,22 @@
                 <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">Infos sur le RDV</h2>
             
                 <section>
-                    <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols xl:grid-cols-3">
+                    <div class="grid grid-cols-1 gap-6 mt-4 sm:grid-cols">
                         
                         <div>
-                            <span class="block">{{__('Profession')}}</span>
-                            <span>Travaille enreigistrer par le patient</span>
+                            <span class="block">{{__('Date et Heure')}}</span>
+                            <span>Heure et Date fournir par le patient (peut changer en fonction de la disponibilite du medecin concerner)</span>
                         </div>
 
                         <div>
-                            <span class="block">{{__('Numero de telephone')}}</span>
-                            <span>Numero du Patient</span>
+                            <span class="block">{{__('Maux')}}</span>
+                            <span>Les Maux enumerer par le patient</span>
                         </div>
 
-                        <div>
-                            <span class="block">{{__('Adresse Geographique')}}</span>
-                            <span>Residence du Patient</span>
-                        </div>
-
-                        <div>
-                            <span class="block">{{__('Profession')}}</span>
-                            <span>Travaille enreigistrer par le patient</span>
+                        <div class="flex justify-end p-2 xl:h-20 top-10">
+                            <x-primary-button>
+                                En cours de traitement
+                            </x-primary-button>
                         </div>
                         
                     </div>

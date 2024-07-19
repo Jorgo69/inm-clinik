@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 
 class SecretaryController extends Controller
@@ -13,28 +14,42 @@ class SecretaryController extends Controller
         $this->myClinicIdService = $myClinicIdService;
     }
 
+    private function clinic(int $clinicId)
+    {
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        return $clinic;
+    }
+
     /**
      * Affichage de la vue de prise de RDV de la secretaire.
      */
-    public function index(int $id)
+    public function index(int $clinicId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($id);
+        
 
         return view('member.secretary.member-secretaire-index', [
-            'clinic' => $clinic,
+            'clinic' => $this->clinic($clinicId),
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create($clinicId)
+    public function create(int $clinicId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        // $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
 
-        return view('member.secretary.member-secretaire-index', [
-            'clinic' => $clinic,
+        return view('member.secretary.member-secretary-post', [
+            'clinic' => $this->clinic($clinicId),
         ]);
+    }
+
+    public function searchPatient(Request $request)
+    {
+        $query = $request->get('query');
+        $users = \App\Models\User::where('name', 'LIKE', "%{$query}%")->get();
+
+        return response()->json($users);
     }
 
     /**
@@ -42,7 +57,23 @@ class SecretaryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'reason' => ['required', 'min:5'],
+            'date' => ['required', 'min:5'],
+            'time' => ['required', 'min:5'],
+        ]);
+
+        $appointment = new Appointment();
+        $appointment->reason = $request->reason;
+        $appointment->date = $request->date;
+        $appointment->time = $request->time;
+        $appointment->patient_id = $request->patient_id;
+        $appointment->clinic_id = $request->clinic_id;
+        $appointment->sector = $request->sector;
+
+        $appointment->save();
+
+        return back()->with('success', 'Rendez-vous note avec success');
     }
 
     /**
@@ -50,10 +81,10 @@ class SecretaryController extends Controller
      */
     public function show(int $clinicId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        // $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
 
         return view('member.secretary.member-secretaire-show-detail', [
-            'clinic' => $clinic,
+            'clinic' => $this->clinic($clinicId),
         ]);
     }
 

@@ -21,11 +21,12 @@ class MemberDoctorController extends Controller
     public function index(int $clinicId)
     {
         $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        // dd($clinic);
 
         // $personals = $this->personal($clinicId);
         // dd($secretaries);
         
-        $role = \App\Models\Role::where('role_name', 'docteur')->firstOrFail();
+        $role = \App\Models\Role::where('role_name', 'doctor')->firstOrFail();
 
         // Récupérer les utilisateurs ayant ce rôle
         $doctors = \App\Models\User::whereHas('clinicUserRoles', function($query) use ($role, $clinicId) {

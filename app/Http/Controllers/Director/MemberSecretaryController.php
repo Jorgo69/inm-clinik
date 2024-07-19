@@ -35,7 +35,7 @@ class MemberSecretaryController extends Controller
         // $personals = $this->personal($clinicId);
         // dd($secretaries);
         
-        $role = \App\Models\Role::where('role_name', 'secretaire')->firstOrFail();
+        $role = \App\Models\Role::where('role_name', 'secretary')->firstOrFail();
 
         // Récupérer les utilisateurs ayant ce rôle
         $secretaires = \App\Models\User::whereHas('clinicUserRoles', function($query) use ($role, $clinicId) {

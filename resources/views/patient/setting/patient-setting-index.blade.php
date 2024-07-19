@@ -4,7 +4,7 @@
 
     <section class="bg-white dark:bg-gray-900">
 
-        <div class="container px-6 py-12 mx-auto">
+        <div class="container mt-20 px-6 py-12 mx-auto">
             
             @if (session('success'))
                 @include('alerts.alert-success')
@@ -19,7 +19,8 @@
                 {{-- Photo - Profil --}}
                 <div class="p-4 rounded-lg bg-blue-50 md:p-6 dark:bg-gray-800">
                     <div class="flex flex-col items-center p-8">
-                        <img src="" alt="" class="w-32 h-32 bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40">
+                        {{-- <img src="" alt="" class="w-32 h-32 bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40"> --}}
+                        <p src="" alt="" class="w-32 h-32 flex items-center justify-center text-5xl font-extra-bold bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40">{{__('JL')}}</p>
                         <h1 class="w-40 h-2 mx-auto mt-6 text-center rounded-lg dark:bg-gray-700">Nom et Prenom</h1>
         
                         <p class="mx-auto mt-4 text-center rounded-lg dark:bg-gray-700">

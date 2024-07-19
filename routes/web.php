@@ -35,6 +35,9 @@ Route::middleware(['auth'])->group( function() {
     Route::get('/member/secretary/take/appointment/{clinic_id}', [MemberSecretaryController::class, 'index'])->name('member.secretary.index');
     // Ajouter RDV - Secretaire
     Route::get('member/secretary/take/appointment/create/{clinic_id}', [MemberSecretaryController::class, 'create'])->name('member.secretary.create');
+    // Recherche de patient pour prise de RDV en temps reel donc JS - Jquery - Ajax
+    Route::get('member/secretary/take/appointment/create/search/patient', [MemberSecretaryController::class, 'searchPatient'])->name('member.secretary.serch.patient');
+
     // Vu detail RDV - Secretaire
     Route::get('member/secretary/show/detail/appointment/{clinic_id}', [MemberSecretaryController::class, 'show'])->name('member.secretary.show.detail.appointment');
 
@@ -44,6 +47,11 @@ Route::middleware(['auth'])->group( function() {
 
     // liste info patient - detail a travail les deux Id Clinique et Patient
     Route::get('/member/patient/liste/{clinic_id}/{patient_id}', [MemberPatientController::class, 'show'])->name('member.patient.show.detail');
+
+    // vu ajouter un compte patient
+    Route::get('member/patient/create/{clinic_id}', [MemberPatientController::class, 'create'])->name('member.patient.create');
+    // creation de compte patient
+    Route::post('member/patient/store/{clinic_id}', [MemberPatientController::class, 'store'])->name('member.patient.store');
 
     // liste des consultations
     Route::get('/member/consultations/liste/{clinic_id}', [MemberConsultationController::class, 'index'])->name('member.consultation.index');
@@ -60,7 +68,9 @@ Route::middleware(['auth'])->group( function() {
     
     // Doctor - Only
     // vue - index
-    Route::get('/member/doctor/', [MemberDoctorController::class, 'index'])->name('member.doctor.index');
+    Route::get('/member/doctor/index/{clinic_id}', [MemberDoctorController::class, 'index'])->name('member.doctor.index');
+    // liste de tous les RDV
+    Route::get('/member/doctor/appointment/all/index/{clinic_id}', [MemberDoctorController::class, 'create'])->name('member.doctor.all.appointment.index');
 });
 
 Route::get('/clinic', function(){
