@@ -13,6 +13,7 @@ use App\Http\Controllers\Patient\AskingController as PatientAskingController;
 use App\Http\Controllers\Patient\ClinicController as PatientClinicController;
 use App\Http\Controllers\Director\AskingController as DirectorAskingController;
 use App\Http\Controllers\Member\ConsultationController as MemberConsultationController;
+use App\Http\Controllers\Member\AppointmentController as MemberAppointmentController;
 use App\Http\Controllers\Member\DoctorController as MemberDoctorController;
 use App\Http\Controllers\Member\PersonalController as MemberPersonalController;
 use App\Http\Controllers\Member\SecretaryController as MemberSecretaryController;
@@ -35,8 +36,12 @@ Route::middleware(['auth'])->group( function() {
     Route::get('/member/secretary/take/appointment/{clinic_id}', [MemberSecretaryController::class, 'index'])->name('member.secretary.index');
     // Ajouter RDV - Secretaire
     Route::get('member/secretary/take/appointment/create/{clinic_id}', [MemberSecretaryController::class, 'create'])->name('member.secretary.create');
+    // Ajouter RDV - par lien detail info du patient - Secretaire
+    Route::get('member/secretaire/take/appointment/reserving/{clinic_id}/{patient_id}', [MemberSecretaryController::class, 'reserving'])->name('member.secretary.reserving');
     // Recherche de patient pour prise de RDV en temps reel donc JS - Jquery - Ajax
     Route::get('member/secretary/take/appointment/create/search/patient', [MemberSecretaryController::class, 'searchPatient'])->name('member.secretary.serch.patient');
+    //Soumission prise de RDV - Secretaire
+    Route::post('member/secretaire/take/appointment/store', [MemberSecretaryController::class, 'store'])->name('member.secretary.store.appointment');
 
     // Vu detail RDV - Secretaire
     Route::get('member/secretary/show/detail/appointment/{clinic_id}', [MemberSecretaryController::class, 'show'])->name('member.secretary.show.detail.appointment');
@@ -55,6 +60,9 @@ Route::middleware(['auth'])->group( function() {
 
     // liste des consultations
     Route::get('/member/consultations/liste/{clinic_id}', [MemberConsultationController::class, 'index'])->name('member.consultation.index');
+
+    // liste des RDV
+    Route::get('/member/appointment/liste/{clinic_id}', [MemberAppointmentController::class, 'index'])->name('member.appointment.index');
 
     // detail consultation specifique pour prise de note
     Route::get('/member/consultation/espace/detail/patient/{consultation_patient_id}', [MemberConsultationController::class, 'show'])->name('member.consultation.detail.show');

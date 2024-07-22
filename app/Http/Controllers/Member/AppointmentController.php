@@ -7,7 +7,7 @@ use App\Models\Appointment;
 use App\Services\ClinicService;
 use Illuminate\Http\Request;
 
-class ConsultationController extends Controller
+class AppointmentController extends Controller
 {
     protected $myClinicIdService;
     
@@ -15,22 +15,22 @@ class ConsultationController extends Controller
     {
         $this->myClinicIdService = $myClinicIdService;
     }
-
     private function clinic(int $clinicId)
     {
         $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
         return $clinic;
     }
-
+    
     /**
-     * Liste des consultations.
+     * Liste des RDV de la clinique concerner
      */
     public function index(int $clinicId)
     {
-        
+        $appointments = Appointment::all();
 
-        return view('member.consultation.consultation-index', [
+        return view('member.appointment.member-appointment-index', [
             'clinic' => $this->clinic($clinicId),
+            'appointments' => $appointments,
         ]);
     }
 
@@ -53,13 +53,9 @@ class ConsultationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(int $clinicId, int $patientId)
+    public function show(string $id)
     {
-        $clinic = $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
-        
-        return view('member.consultation.consultation-detail-show', [
-            'clinic' => $clinic,
-        ]);
+        //
     }
 
     /**

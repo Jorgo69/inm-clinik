@@ -31,7 +31,7 @@ class Clinic extends Model
     */
     public function adder(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'adder_id'); // 'adder_id' est la clé étrangère dans la table clinics
     }
 
     public function validator(): BelongsTo

@@ -35,5 +35,6 @@
         </div>
         @include('layouts.footer')
         @stack('srcCDN')
+        @stack('liveSearchAjax')
     </body>
 </html>

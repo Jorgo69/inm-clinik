@@ -19,11 +19,11 @@ return new class extends Migration
             $table->text('files');
             $table->text('number');
             $table->text('email');
-            $table->unsignedBigInteger('asker_id')->nullable();
+            $table->unsignedBigInteger('asker_id');
             $table->foreign('asker_id')
                     ->references('id')
                     ->on('users')
-                    ->onDelete('set null');
+                    ->onDelete('cascade');
             $table->string('actived')->default('waiting');
             $table->softDeletes();
             $table->timestamps();

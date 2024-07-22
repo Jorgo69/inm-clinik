@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('subscriptions', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('owner_id');
+            $table->foreign('owner_id')->on('users')->references('id')->onDelete('cascade');
+            $table->string('plan_name');
+            $table->decimal('price', 8, 2);
+            $table->date('start_date');
+            $table->date('end_date');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

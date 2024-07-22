@@ -63,34 +63,36 @@
         @push('jquery')            
         
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        @endpush
+
+        @push('searchAjax')
         <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Sélectionnez tous les boutons qui ouvrent les modals
-    var modalButtons = document.querySelectorAll('[data-modal-target]');
-    var modals = document.querySelectorAll('.modal');
+            document.addEventListener('DOMContentLoaded', function() {
+            // Sélectionnez tous les boutons qui ouvrent les modals
+            var modalButtons = document.querySelectorAll('[data-modal-target]');
+            var modals = document.querySelectorAll('.modal');
 
-    modalButtons.forEach(function(button) {
-        button.addEventListener('click', function() {
-            var target = button.getAttribute('data-modal-target');
-            var modal = document.querySelector(target);
-            if (modal) {
-                modal.classList.remove('hidden');
-            } else {
-                console.error('Modal with id ' + target + ' does not exist.');
-            }
+            modalButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var target = button.getAttribute('data-modal-target');
+                    var modal = document.querySelector(target);
+                    if (modal) {
+                        modal.classList.remove('hidden');
+                    } else {
+                        console.error('Modal with id ' + target + ' does not exist.');
+                    }
+                });
+            });
+
+            // Ajoutez des écouteurs d'événements pour fermer les modals
+            modals.forEach(function(modal) {
+                var closeButton = modal.querySelector('.close-modal');
+                closeButton.addEventListener('click', function() {
+                    modal.classList.add('hidden');
+                });
+            });
         });
-    });
-
-    // Ajoutez des écouteurs d'événements pour fermer les modals
-    modals.forEach(function(modal) {
-        var closeButton = modal.querySelector('.close-modal');
-        closeButton.addEventListener('click', function() {
-            modal.classList.add('hidden');
-        });
-    });
-});
-
-
         </script>
         @endpush
 

@@ -13,6 +13,14 @@
                    <span class="flex-1 ms-3 whitespace-nowrap">Urgence</span>
                 </a>
             </li>
+            {{-- RDV --}}
+            <li>
+                <a href="{{route('member.appointment.index', ['clinic_id' => $clinic->id])}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                   <x-svg-appointment />
+                   <span class="flex-1 ms-3 whitespace-nowrap">Consultation</span>
+                </a>
+            </li>
+            {{-- Consultation --}}
             <li>
                 <a href="{{route('member.consultation.index', ['clinic_id' => $clinic->id])}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                    <x-svg-consultation />

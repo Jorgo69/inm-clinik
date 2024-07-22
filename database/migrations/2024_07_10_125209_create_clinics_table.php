@@ -14,17 +14,18 @@ return new class extends Migration
         Schema::create('clinics', function (Blueprint $table) {
             $table->id();
             $table->string('clinic_name');
+            $table->string('clinic_slug');
             $table->string('clinic_description');
             $table->string('clinic_geographic_adress');
             $table->string('clinic_logo');
             $table->string('clinic_mail');
             $table->string('clinic_number');
 
-            $table->unsignedBigInteger('adder_id')->nullable();
+            $table->unsignedBigInteger('adder_id');
                 $table->foreign('adder_id')
                         ->on('users')
                         ->references('id')
-                        ->onDelete('set null');
+                        ->onDelete('cascade');
             $table->string('actived')->default('waiting');
             $table->unsignedBigInteger('validator_id')->nullable();
                 $table->foreign('validator_id')

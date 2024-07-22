@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Services\ClinicService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,9 +28,12 @@ class PatientController extends Controller
      */
     public function index(int $clinicId)
     {
+        $patients = User::where('role', 'patient')
+                        ->orderByDesc('created_at')->get();
         
         return view('member.patient.member-patient-index', [
             'clinic' => $this->clinic($clinicId),
+            'patients' => $patients,
         ]);
     }
 
@@ -76,12 +80,13 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $clinicId, int $patientId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($id);
+        $patient = User::find($patientId);
 
         return view('member.patient.member-patient-detail', [
-            'clinic' => $clinic,
+            'clinic' => $this->clinic($clinicId),
+            'patient' => $patient,
         ]);
     }
 

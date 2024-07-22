@@ -16,12 +16,17 @@
                 <div class="flex flex-col items-center p-8">
                     {{-- <img src="" alt="" class="w-32 h-32 bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40"> --}}
                     <div class="w-32 h-32 text-center flex items-center justify-center text-5xl tracking-tighter font-bold bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40">
-                      JL
+                        {{
+                            Str::substr($patient->name, 0, 1).
+                            Str::substr($patient->firstname, 0, 1)
+                        }}
                     </div>
-                    <h1 class="w-40 h-2 mx-auto mt-6 text-center rounded-lg dark:bg-gray-700">Exemple</h1>
+                    <p class="w-40 h-2 mx-auto mt-6 text-center rounded-lg dark:bg-gray-700">
+                        {{$patient->name .' '. $patient->firstname}}
+                    </p>
     
                     <p class="mx-auto mt-4 text-center rounded-lg dark:bg-gray-700">
-                        
+                        {{$patient->email}}
                     </p>
                     <div class="mt-4 ">
                       
@@ -56,6 +61,11 @@
                             <span>Travaille enreigistrer par le patient</span>
                         </div>
                         
+                    </div>
+                    <div class="flex items-end justify-end bottom-0">
+                        <x-nav-link href="{{route('member.secretary.reserving', ['clinic_id'=> $clinic->id, 'patient_id' => $patient->id])}}">
+                            Prendre RDV
+                        </x-nav-link>
                     </div>
                 </section>
             </div>

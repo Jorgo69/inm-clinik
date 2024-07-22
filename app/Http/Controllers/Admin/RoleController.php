@@ -29,7 +29,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::with('users')->orderByDesc('created_at')->get();
+        $roles = Role::orderByDesc('created_at')->get();
 
         return view('adminSystem.role.role-index', [
             'roles' => $roles,
