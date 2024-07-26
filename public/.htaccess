@@ -19,3 +19,7 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+# PWA 
+<FilesMatch "\.(html|json|js|css)$">
+  Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+</FilesMatch>

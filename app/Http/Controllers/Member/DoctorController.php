@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
@@ -12,15 +13,30 @@ class DoctorController extends Controller
     {
         $this->myClinicIdService = $myClinicIdService;
     }
+
+    private function clinic(int $clinicId)
+    {
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        return $clinic;
+    }
+
+    private function member()
+    {
+        $member = auth()->user();
+        
+        return $member;
+    }
     /**
      * Affichage specifique au doctor d'une clinique.
+     * Ici ses RDV
      */
     public function index(int $clinicId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        $appointmentsMine = Appointment::where('concerned_id', $this->member()->id)->get();
 
         return view('member.doctor.member-doctor-index', [
-            'clinic' => $clinic,
+            'clinic' => $this->clinic($clinicId),
+            'appointmentsMine' => $appointmentsMine,
         ]);
     }
 
@@ -35,6 +51,8 @@ class DoctorController extends Controller
             'clinic' => $clinic,
         ]);
     }
+
+
 
     /**
      * Store a newly created resource in storage.

@@ -15,18 +15,24 @@ class MemberDoctorController extends Controller
         $this->myClinicIdService = $myClinicIdService;
     }
 
+    private function clinic(int $clinicId)
+    {
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        return $clinic;
+    }
+
     /**
-     * Display a listing of the resource.
+     * Affichage de la liste des docteur de la clinique via id
      */
     public function index(int $clinicId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        
         // dd($clinic);
 
         // $personals = $this->personal($clinicId);
         // dd($secretaries);
         
-        $role = \App\Models\Role::where('role_name', 'doctor')->firstOrFail();
+        $role = \App\Models\Role::where('role_name', 'doctor')->first();
 
         // Récupérer les utilisateurs ayant ce rôle
         $doctors = \App\Models\User::whereHas('clinicUserRoles', function($query) use ($role, $clinicId) {
@@ -35,7 +41,7 @@ class MemberDoctorController extends Controller
         })->get();
 
         return view('director.member.doctor.director-doctor-index', [
-            'clinic' => $clinic,
+            'clinic' => $this->clinic($clinicId),
             'doctors' => $doctors,
         ]);
     }

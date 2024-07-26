@@ -15,7 +15,7 @@
             <div class="p-4 rounded-lg bg-blue-50 md:p-6 dark:bg-gray-800">
                 <div class="flex flex-col items-center p-8">
                     {{-- <img src="" alt="" class="w-32 h-32 bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40"> --}}
-                    <div class="w-32 h-32 text-center flex items-center justify-center text-5xl tracking-tighter font-bold bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40">
+                    <div class="w-32 h-32 uppercase text-center flex items-center justify-center text-5xl tracking-tighter font-bold bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40">
                         {{
                             Str::substr($patient->name, 0, 1).
                             Str::substr($patient->firstname, 0, 1)
@@ -25,7 +25,7 @@
                         {{$patient->name .' '. $patient->firstname}}
                     </p>
     
-                    <p class="mx-auto mt-4 text-center rounded-lg dark:bg-gray-700">
+                    <p class="mt-4 text-center rounded-lg dark:bg-gray-700">
                         {{$patient->email}}
                     </p>
                     <div class="mt-4 ">
@@ -63,6 +63,9 @@
                         
                     </div>
                     <div class="flex items-end justify-end bottom-0">
+                        <x-nav-link href="{{route('member.consultation.detail.show', ['clinic_id'=> $clinic->id, 'patient_id' => $patient->id])}}">
+                            Consultation
+                        </x-nav-link>
                         <x-nav-link href="{{route('member.secretary.reserving', ['clinic_id'=> $clinic->id, 'patient_id' => $patient->id])}}">
                             Prendre RDV
                         </x-nav-link>
@@ -123,26 +126,33 @@
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                     
+                                    @forelse ($consultations as $consultation)
                                     <tr>
                                         <td class="px-4 py-4 text-sm whitespace-nowrap">
                                             <div class="flex items-center">
-                                                <span class="font-medium inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
-                                                    JL
-                                                </span>
+                                                <p class="inline uppercase px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                                    {{\Carbon\Carbon::parse($consultation->created_at)->translatedFormat('l jS F Y')}}
+                                                    à
+                                                    {{\Carbon\Carbon::parse($consultation->created_at)->translatedFormat('H : i')}}
+                                                </p>
                                             </div>
                                         </td>
 
                                         <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                             <div>
-                                                <h2 class="font-medium text-gray-800 dark:text-white ">Nom</h2>
-                                                <p class="text-sm font-normal text-gray-600 dark:text-gray-400">Mail</p>
+                                                <h2 class="font-medium text-gray-800 dark:text-white ">
+                                                    {{$consultation->concerned->name}}
+                                                </h2>
+                                                <p class="text-sm font-normal text-gray-600 dark:text-gray-400">
+                                                    {{$consultation->concerned->email}}
+                                                </p>
                                             </div>
                                         </td>
                                         
                                         <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
                                             {{-- <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800"> --}}
                                             <div class="inline px-3 py-1 text-sm font-normal rounded-full text-red-500 gap-x-2 bg-red-100/60 dark:bg-gray-800">
-                                                En Attent ...
+                                                {{$consultation->theClinic->clinic_name}}
                                             </div>
                                         </td>
                                         
@@ -158,7 +168,14 @@
                                                     </x-nav-link>
                                                 </div>
                                         </td>
-                                    </tr> 
+                                    </tr>
+                                    @empty
+                                    <tr class="text-center">
+                                        <td colspan="4">Aucune consultation effectuer pour le moment</td>
+                                    </tr>
+                                    @endforelse
+
+                                    
                                     
                                     
                                 </tbody>

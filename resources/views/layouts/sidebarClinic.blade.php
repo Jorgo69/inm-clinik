@@ -17,7 +17,7 @@
             <li>
                 <a href="{{route('member.appointment.index', ['clinic_id' => $clinic->id])}}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                    <x-svg-appointment />
-                   <span class="flex-1 ms-3 whitespace-nowrap">Consultation</span>
+                   <span class="flex-1 ms-3 whitespace-nowrap">Rendez-vous</span>
                 </a>
             </li>
             {{-- Consultation --}}
@@ -51,27 +51,31 @@
             </li>
 
             {{-- Secretaire - Sous - Menu --}}
-            <li>
-                <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-secretaire-submenu" data-collapse-toggle="dropdown-secretaire-submenu">
-                    <x-svg-hospital-secretary />
-                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Secretaire</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                    </svg>
-                </button>
-                <ul id="dropdown-secretaire-submenu" class="hidden py-2 space-y-2">
-                    <li>
-                        <a href="{{route('member.secretary.create', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                        Ajouter RDV
-                    </a>
-                    </li>
-                    <li>
-                        <a href="{{route('member.secretary.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                        Liste des RDV
-                    </a>
-                    </li>
-                </ul>
-            </li>
+            @auth
+                @if (auth()->user()->role === 'member-secretary')
+                <li>
+                    <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-secretaire-submenu" data-collapse-toggle="dropdown-secretaire-submenu">
+                        <x-svg-hospital-secretary />
+                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Secretaire</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+                    <ul id="dropdown-secretaire-submenu" class="hidden py-2 space-y-2">
+                        <li>
+                            <a href="{{route('member.secretary.create', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            Ajouter RDV
+                        </a>
+                        </li>
+                        <li>
+                            <a href="{{route('member.secretary.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            Liste des RDV
+                        </a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+            @endauth
             {{-- End Secretaire - Sous - Menu --}}
 
 
@@ -83,27 +87,31 @@
             </li>
 
             {{-- Docteur - Sous - Menu --}}
-            <li>
-                <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-docteur-submenu" data-collapse-toggle="dropdown-docteur-submenu">
-                    <x-svg-nurse-docteur />
-                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Docteur</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                    </svg>
-                </button>
-                <ul id="dropdown-docteur-submenu" class="hidden py-2 space-y-2">
-                    <li>
-                        <a href="{{route('member.doctor.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                        Mes RDV
+            @auth
+                @if (auth()->user()->role === 'doctor')
+                <li>
+                    <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-docteur-submenu" data-collapse-toggle="dropdown-docteur-submenu">
+                        <x-svg-nurse-docteur />
+                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Docteur</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+                    <ul id="dropdown-docteur-submenu" class="hidden py-2 space-y-2">
+                        <li>
+                            <a href="{{route('member.doctor.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            Mes RDV
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('member.doctor.all.appointment.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                            Mes Consultations
                         </a>
-                    </li>
-                    <li>
-                        <a href="{{route('member.doctor.all.appointment.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                        Liste des RDV
-                    </a>
-                    </li>
-                </ul>
-            </li>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+            @endauth
             
             {{-- End Docteur - Sous - Menu --}}
             <li>
@@ -114,59 +122,65 @@
             </li>
 
             {{-- Menu - Submenu - Director - A traver l'Id --}}
-            <li>
-                <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-personals-submenu" data-collapse-toggle="dropdown-personals-submenu">
-                    <x-svg-personnals />
-                    <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Personnels</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                    </svg>
-                </button>
-                <ul id="dropdown-personals-submenu" class="hidden py-2 space-y-2">
-                    <li>
-                        <a href="{{route('member.personal.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                            <x-svg-people-group />
-                            <span class="mx-2">Le personnel</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('director.member.doctor.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                            <x-svg-stethoscope-doctor />
-                            <span class="mx-2">Docteur</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                            <x-svg-nurse-docteur />
-                            <span class="mx-2">Infirmier</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                            <x-svg-caregiver />
-                            <span class="mx-2">Aide soignant</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                            <x-svg-cashier-machine-profile />
-                            <span class="mx-2">Caissier</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                            <x-svg-pharmacy-symbole />
-                            <span class="mx-2">Pharmaciens</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{route('director.member.personal.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
-                            <x-svg-hospital-secretary />
-                            <span class="mx-2">Secretaire</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            @auth()
+                @if (auth()->user()->role === 'director' || auth()->user()->role === 'admin...system')
+                <li>
+                    <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-personals-submenu" data-collapse-toggle="dropdown-personals-submenu">
+                        <x-svg-personnals />
+                        <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">Personnels</span>
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+                    <ul id="dropdown-personals-submenu" class="hidden py-2 space-y-2">
+                        <li>
+                            <a href="{{route('member.personal.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <x-svg-people-group />
+                                <span class="mx-2">Le personnel</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('director.member.doctor.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <x-svg-stethoscope-doctor />
+                                <span class="mx-2">Docteur</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <x-svg-nurse-docteur />
+                                <span class="mx-2">Infirmier</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <x-svg-caregiver />
+                                <span class="mx-2">Aide soignant</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <x-svg-cashier-machine-profile />
+                                <span class="mx-2">Caissier</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <x-svg-pharmacy-symbole />
+                                <span class="mx-2">Pharmaciens</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{route('director.member.personal.index', ['clinic_id' => $clinic->id])}}" class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                <x-svg-hospital-secretary />
+                                <span class="mx-2">Secretaire</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                @endif
+            @endauth
+           
+
            </ul>
         </div>
     

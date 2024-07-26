@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
-    @section('layouts-sidebar')
-        @include('layouts.sidebar')
+    @section('layouts-sidebarClinic')
+        @include('layouts.sidebarClinic')
     @endsection
 
     @section('app-container')
@@ -43,7 +43,7 @@
                             </svg>
                         </span>
       
-                        <input type="text" placeholder="Rechercher une consultation" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                        <input type="text" placeholder="Rechercher un Rendez-vous" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40">
                     </div>
                 </div>
       
@@ -125,7 +125,7 @@
                                                               </svg>
                                                           </button> --}}
                   
-                                                          <x-nav-link href="{{route('member.consultation.detail.show', ['consultation_patient_id' => 1])}}" class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-primaryHover focus:outline-none">
+                                                          <x-nav-link href="{{route('member.appointment.show', ['clinic_id' => $clinic->id, 'appointment_id' => $appointment->id])}}" class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-primaryHover focus:outline-none">
                                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                                                             </svg>
@@ -144,53 +144,8 @@
                                           </tr>
                                         @empty
                                         <tr>
-                                            <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                    Jeudi 10h
-                                                </div>
-                                            </td>
-                                              <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                  <div>
-                                                      <h2 class="font-medium text-gray-800 dark:text-white ">Catalog</h2>
-                                                      <p class="text-sm font-normal text-gray-600 dark:text-gray-400">catalogapp.io</p>
-                                                  </div>
-                                              </td>
-                                              <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                  <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                      Masculin
-                                                  </div>
-                                              </td>
-                                              <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                  <div class="flex items-center">
-                                                      <img class="object-cover size-10 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="">
-                                                  </div>
-                                              </td>
-        
-                                              <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                      <div class="flex items-center gap-x-6">
-                                                          {{-- <button class="text-gray-500 transition-colors duration-200 dark:hover:text-red-500 dark:text-gray-300 hover:text-red-500 focus:outline-none">
-                                                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                                                              </svg>
-                                                          </button> --}}
-                  
-                                                          <x-nav-link href="{{route('member.consultation.detail.show', ['consultation_patient_id' => 1])}}" class="text-gray-500 transition-colors duration-200 dark:hover:text-yellow-500 dark:text-gray-300 hover:text-primaryHover focus:outline-none">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
-                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
-                                                            </svg>
-                                                            Detail
-                                                        </x-nav-link>
-                                                      </div>
-                                              </td>
-        
-                                              <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                  <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
-                                                      </svg>
-                                                  </button>
-                                              </td>
-                                          </tr>
+                                            <td class="px-4 py-4 text-sm whitespace-nowrap text-center" colspan="6">Aucun Rendez-vous pour le moment</td>
+                                        </tr>
                                         @endforelse                                        
                                     </tbody>
                                 </table>

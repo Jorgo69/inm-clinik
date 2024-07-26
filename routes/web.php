@@ -63,9 +63,15 @@ Route::middleware(['auth'])->group( function() {
 
     // liste des RDV
     Route::get('/member/appointment/liste/{clinic_id}', [MemberAppointmentController::class, 'index'])->name('member.appointment.index');
+    // vu detail RDV
+    Route::get('/member/appointment/show/detail/{clinic_id}/{appointment_id}', [MemberAppointmentController::class, 'show'])->name('member.appointment.show');
+    // accepter RDV patient
+    Route::put('/member/appointment/accept/{appointment_id}', [MemberAppointmentController::class, 'edit'])->name('member.appointment.accept');
 
     // detail consultation specifique pour prise de note
-    Route::get('/member/consultation/espace/detail/patient/{consultation_patient_id}', [MemberConsultationController::class, 'show'])->name('member.consultation.detail.show');
+    Route::get('/member/consultation/espace/detail/patient/{clinic_id}/{patient_id}', [MemberConsultationController::class, 'show'])->name('member.consultation.detail.show');
+    // consultation prise de note
+    Route::post('member/consultation/clinic/patient', [MemberConsultationController::class, 'store'])->name('member.consultation.create');
 
     // vu clinique appartient
     Route::get('/member/group/clinics/index', [MemberClinicController::class, 'index'])->name('member.group.clinic.index');
@@ -102,14 +108,19 @@ Route::middleware(['auth'])->group( function() {
 
 // Auth - Director Ressource
 Route::middleware(['auth', 'director'])->group( function() {
+    // Pour completer ces infos afin de faire valider son compte en temps que Directeur
+    Route::get('/director/complet/infos', function() {
+        return view('director.complet-infos');
+    })->name('director.complet.infos.index');
+
     // Index du menu ou sont liste les cliniques
-    Route::get('/director/menu', [ClinicController::class, 'index'])->name('direcor.menu.index');
+    Route::get('/director/menu', [ClinicController::class, 'index'])->name('direcor.menu.index')->middleware('check_account_activated');
 
     // Detail clinique
     Route::get('director/menu/{id}/clinic/detail', [ClinicController::class, 'show'])->name('director.clinic.detail');
 
     // Inscription de clinique - Post
-    Route::post('director/menu/add/clinic', [ClinicController::class, 'store'])->name('director/add/clinic');
+    Route::post('director/menu/add/clinic', [ClinicController::class, 'store'])->name('director.add.clinic');
 
     // Completer compte pour devenir directeur
     Route::post('/director/asking/post', [DirectorAskingController::class, 'store'])->name('director.asking.post');
@@ -125,6 +136,8 @@ Route::middleware(['auth', 'director'])->group( function() {
 
     // Creer un Role
     Route::post('director/role/member/attribute', [DirectorMemberPersonalController::class, 'create'])->name('director.attribute.member.role');
+    // Modifier Role
+    Route::put('/director/role/member/change/{clinic_id}/{personal_id}', [DirectorMemberPersonalController::class, 'update'])->name('director.change.member.role');
 
     //  Clinique Specifique - Start
 
@@ -172,11 +185,6 @@ Route::middleware(['auth', 'admin.system'])->group( function() {
 // Route::middleware(['auth', 'director'])->group( function() {
 //     Route::post('/director/asking/post', [DirectorAskingController::class, 'store'])->name('director.asking.post');
 // });
-
-
-Route::get('/director/complet/infos', function() {
-    return view('director.complet-infos');
-})->name('director.complet.infos.index');
 
 // Messenger
 Route::get('/messengers', function() {

@@ -76,7 +76,7 @@ class SecretaryController extends Controller
                     ->get();
 
         }else{
-            $users = \App\Models\User::where('role', 'patient')->take(2)->get();
+            $users = \App\Models\User::where('role', 'patient')->get();
         }
 
         return response()->json($users);

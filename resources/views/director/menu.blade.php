@@ -17,7 +17,7 @@
                 <div class="my-10">
                   <span class=" {{$clinics->count() === 0 ? 'block' : '' }}">Nombre total de clinique a mon actif :</span>
                   <span class="font-bold">{{$clinics->count() > 0 ? $clinics->count() : ' Aucune clinique a mon actif'}}</span>
-                  <form action="{{route('director/add/clinic')}}" method="POST" enctype="multipart/form-data">
+                  <form action="{{route('director.add.clinic')}}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     {{-- Nom de la clinique --}}
@@ -36,9 +36,9 @@
 
                   {{-- Adresse Geographique --}}
                   <div>
-                    <x-input-label for="clinic_geographic_adress" :value="__('Adresse Geographique de la clinique')" />
-                    <x-text-input id="clinic_geographic_adress" class="block mt-1 p-2 w-full" type="text" name="clinic_geographic_adress" required />
-                    <x-input-error :messages="$errors->get('clinic_geographic_adress')" class="mt-2" />
+                    <x-input-label for="clinic_city" :value="__('Ville de la clinique')" />
+                    <x-text-input id="clinic_city" class="block mt-1 p-2 w-full" type="text" name="clinic_city" required />
+                    <x-input-error :messages="$errors->get('clinic_city')" class="mt-2" />
                   </div>
 
                   {{-- Logo de la clinique --}}

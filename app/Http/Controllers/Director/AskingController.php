@@ -59,17 +59,16 @@ class AskingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Complexion d'info pour que le compte puisse etre valide
      */
     public function store(Request $request)
     {
         $request->validate([
             'complet_name' => ['required', 'string', 'max:255'],
-            'matricule' => ['required', 'string', 'max:255'],
-            'adresse' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:50'],
             'files.*' => ['required', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
-            'number' => ['required', 'numeric',],
-            // 'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.CheckAccount::class],
+            'number' => ['required'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.CheckAccount::class],
         ]);
         
         $director = auth()->user();
@@ -85,36 +84,29 @@ class AskingController extends Controller
                 $file->storeAs('admin/checkAccount', $fileName, 'public');
                 $filesPaths[] = 'admin/checkAccount/' . $fileName;
         }
-
-
-            // dd($filesPaths);
-
-        // $critere puisse que la methode updateOrCreate se basera dessus pour savoir 
-        //elle doit cree une nouvelle entree ou fait la mise a jour
-        $critere = [
-            'complet_name' => $request->complet_name,
-            'asker_id' => $director->id,
-        ];
-        // $data car c'est uniquement les informations a ajouter
-        $data = [
-            'files' => json_encode($filesPaths), // Enregistrez les chemins des fichiers sous forme de chaîne JSON
-            'number' => $request->number,
-            'email' => $request->email,
-            'matricule' => $request->matricule,
-            'adresse' => $request->adresse,
-        ];
-    Storage::disk('public')->delete($filesPaths);
         
-            CheckAccount::updateOrCreate($critere, $data);
+        $checkAccount = new CheckAccount();
+        $checkAccount->asker_id = $director->id;
+        $checkAccount->complet_name = $request->complet_name;
+        $checkAccount->tel_number = $request->number;
+        $checkAccount->email = $request->email;
+        $checkAccount->city = $request->city;
+        $checkAccount->country = 'Benin';
+        $checkAccount->neighborhood_adress = $request->neighborhood_adress;
+        $checkAccount->files = json_encode($filesPaths);
+        
+            
+        $checkAccount->save();
 
         return back()->with(['success' => 'Fichiers téléchargés et informations enregistrées avec succès'], 200);
     }
+    // Storage::disk('public')->delete($filesPaths);
     return back()->with(['warning' => 'Aucun fichier à télécharger'], 400);
 
     }
 
     /**
-     * Display the specified resource.
+     * Afficher detail demande.
      */
     public function show(string $id)
     {
@@ -136,10 +128,10 @@ class AskingController extends Controller
     /**
      * Approuver le user a appartenir a cette clinique.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $sker_id)
     {
-        $asking = RequestToBecomeClinicMember::find($id);
-        $clinicId = $asking->clinic_id;
+        $asking = RequestToBecomeClinicMember::find($sker_id);
+        // dd($asking);
 
         $clinicId = $asking->clinic_id;
         $askerId = $asking->asker_id;
@@ -150,13 +142,20 @@ class AskingController extends Controller
             abort(403);
         }
         
-        $clinic->usersClincs()->attach($askerId, ['adder_id' => $this->adder()->id]);
+        if($asking->statut === 'validated')
+        {
+            $asking->statut = 'waiting';
+            $clinic->usersClincs()->detach($askerId, ['adder_id' => $this->adder()->id]);
+            $asking->update();
+            return back()->with('error', 'Membre retirer avec success');
+        }
 
         $asking->statut = 'validated';
-
+        $clinic->usersClincs()->attach($askerId, ['adder_id' => $this->adder()->id]);
         $asking->update();
-
         return back()->with('success', 'Membre approuver avec success');
+
+        
     }
 
     /**

@@ -6,6 +6,7 @@
 
         <title>{{config('app.name')}}</title>
         <link rel="shortcut icon" href="{{asset('assets/svg/logo.svg')}}" type="image/x-icon">
+        @laravelPWA
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">

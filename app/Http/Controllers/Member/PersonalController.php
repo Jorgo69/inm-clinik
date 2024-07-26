@@ -18,6 +18,12 @@ class PersonalController extends Controller
         $this->myClinicIdService = $myClinicIdService;
     }
 
+    private function clinic(int $clinicId)
+    {
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        return $clinic;
+    }
+
     /** Liste le personnel a travers l'id de la clinique */
     private function personal(int $id)
     {
@@ -39,11 +45,11 @@ class PersonalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(int $id)
+    public function index(int $clinicId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($id);
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
 
-        $personals =  $this->personal($id);
+        $personals =  $this->personal($clinicId);
         
 
         return view('member.personal.member-personal-index', [
@@ -99,9 +105,8 @@ class PersonalController extends Controller
     /**
      * Affiche les details pour un membre specifique.
      */
-    public function show(int $id,int $personalId)
+    public function show(int $clinicId,int $personalId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($id);
 
         $personal = \App\Models\User::find($personalId);
 
@@ -113,7 +118,7 @@ class PersonalController extends Controller
         $roles = \App\Models\Role::all();
 
         return view('member.personal.member-personal-detail', [
-            'clinic' => $clinic,
+            'clinic' => $this->clinic($clinicId),
             'personal' => $personal,
             'roles' => $roles,
             'currentPersonal' => $currentPersonal,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
+use App\Models\ConsultationMedical;
 use App\Models\User;
 use App\Services\ClinicService;
 use Carbon\Carbon;
@@ -36,6 +37,8 @@ class PatientController extends Controller
             'patients' => $patients,
         ]);
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -84,9 +87,12 @@ class PatientController extends Controller
     {
         $patient = User::find($patientId);
 
+        $consultations = ConsultationMedical::where('patient_id', $patientId)->get();
+
         return view('member.patient.member-patient-detail', [
             'clinic' => $this->clinic($clinicId),
             'patient' => $patient,
+            'consultations' => $consultations,
         ]);
     }
 

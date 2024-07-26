@@ -8,7 +8,10 @@
 {{-- Contenu propore a ce fichier --}}
 @section('app-container')
     <div class="p-4 sm:ml-64">
-        <x-aside> 
+        <x-aside>
+            @if (session('success'))
+            @include('alerts.alert-success')                
+            @endif
             <section class="container px-4 mx-auto">
                 <div class="sm:flex sm:items-center sm:justify-between">
                     <div>
@@ -23,16 +26,16 @@
 
                     <div class="flex items-center mt-4 gap-x-3">
 
-                        <button class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+                        <button data-modal-target="add-rdv-secretary-modal" data-modal-toggle="add-rdv-secretary-modal" class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-
+      
                             <span>Ajouter Patient</span>
                         </button>
                     </div>
                 </div>
-
+          @include('member.patient.member-patient-modal-create')
                 <div class="mt-6 md:flex md:items-center md:justify-between">
                     <div class="inline-flex overflow-hidden bg-white border divide-x rounded-lg dark:bg-gray-900 rtl:flex-row-reverse dark:border-gray-700 dark:divide-gray-700">
                         <button class="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm dark:bg-gray-800 dark:text-gray-300">
@@ -125,37 +128,7 @@
                                             </td>
                                         </tr>
                                         @empty
-                                        <tr>
-                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                <div class="flex items-center">
-                                                    <img class="object-cover size-10 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=256&q=80" alt="">
-                                                </div>
-                                            </td>
-
-                                            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div>
-                                                    <h2 class="font-medium text-gray-800 dark:text-white ">Catalog</h2>
-                                                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400">catalogapp.io</p>
-                                                </div>
-                                            </td>
-                                            
-                                            <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
-                                                    Patients
-                                                </div>
-                                            </td>
-                                            
-
-                                            <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                                    <div class="flex items-center gap-x-6">
-                                                        
-                                                        <x-nav-link class="font-medium mx-4 text-gray-500 dark:text-blue-500 hover:underline">
-                                                            <x-svg-detail/>
-                                                            Details
-                                                        </x-nav-link>
-                                                    </div>
-                                            </td>
-                                        </tr>
+                                        <tr><td colspan="4"></td></tr>
                                         @endforelse
                                     </tbody>
                                 </table>

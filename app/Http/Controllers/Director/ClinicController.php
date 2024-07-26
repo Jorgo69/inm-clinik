@@ -18,6 +18,11 @@ class ClinicController extends Controller
         $adder = auth()->user();
         return $adder;
     }
+    private function slug($request)
+    {
+        $slug = Str::slug($request. now());
+        return $slug;
+    }
     /**
      * Affichage des cliniques en ordre decroissante se basant sur la date de creation.
      */
@@ -35,6 +40,7 @@ class ClinicController extends Controller
             'adder' => $this->adder(),
         ]);
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -53,7 +59,7 @@ class ClinicController extends Controller
         $request->validate([
             'clinic_name' => ['required', 'string', 'min:2', 'max:50'],
             'clinic_description' => ['required', 'string',],
-            'clinic_geographic_adress' => ['required', 'string', 'min:2', 'max:150'],
+            'clinic_city' => ['required', 'string', 'min:2', 'max:150'],
             'clinic_logo' => ['required', 'image', 'mimes:jpg,jpeg,png,', 'max:2000'],
             'clinic_mail' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Clinic::class],
             'clinic_number' => ['required', 'numeric',],
@@ -73,11 +79,16 @@ class ClinicController extends Controller
             // on met le disk suivi du chemin [dynamique donc on va se base sur les donne envoyer de la base de donne]
             // Storage::disk('public')->delete($logo);
         // }
+        
 
         $addClinic = new Clinic();
         $addClinic->clinic_name = $request->clinic_name;
+        $addClinic->clinic_slug = $this->slug($request->clinic_name);
         $addClinic->clinic_description = $request->clinic_description;
-        $addClinic->clinic_geographic_adress = $request->clinic_geographic_adress;        
+        $addClinic->clinic_city = $request->clinic_city;
+        $addClinic->clinic_country = 'Benin';
+        $addClinic->clinic_neighborhood_adress = $request->clinic_neighborhood_adress;
+        $addClinic->clinic_geographic_adress = 'position';
         $addClinic->clinic_logo = $logoPath;
         $addClinic->clinic_mail = $request->clinic_mail;
         $addClinic->clinic_number = $request->clinic_number;
@@ -120,11 +131,13 @@ class ClinicController extends Controller
 
 
     /**
-     * Display the specified resource.
+     * Affichage du clinique clique pour directeur
+     * pour autre clinique auquel ils appartiennent
      */
     public function show(string $id)
     {
         $clinic = Clinic::find($id);
+        // dd($clinic);
 
         $clinicCount = $clinic->countUsersClinics();
 

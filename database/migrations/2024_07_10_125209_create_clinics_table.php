@@ -16,23 +16,18 @@ return new class extends Migration
             $table->string('clinic_name');
             $table->string('clinic_slug');
             $table->string('clinic_description');
-            $table->string('clinic_geographic_adress');
             $table->string('clinic_logo');
             $table->string('clinic_mail');
             $table->string('clinic_number');
+            $table->string('clinic_country')->nullable();
+            $table->string('clinic_city');
+            $table->string('clinic_neighborhood_adress')->nullable();
 
             $table->unsignedBigInteger('adder_id');
                 $table->foreign('adder_id')
                         ->on('users')
                         ->references('id')
-                        ->onDelete('cascade');
-            $table->string('actived')->default('waiting');
-            $table->unsignedBigInteger('validator_id')->nullable();
-                $table->foreign('validator_id')
-                        ->on('users')
-                        ->references('id')
-                        ->onDelete('set null');
-            
+                        ->onDelete('cascade');            
             $table->softDeletes();
             $table->timestamps();
         });

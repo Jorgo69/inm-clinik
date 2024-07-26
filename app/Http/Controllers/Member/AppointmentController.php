@@ -20,13 +20,20 @@ class AppointmentController extends Controller
         $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
         return $clinic;
     }
+
+    private function member()
+    {
+        $member = auth()->user();
+        
+        return $member;
+    }
     
     /**
      * Liste des RDV de la clinique concerner
      */
     public function index(int $clinicId)
     {
-        $appointments = Appointment::all();
+        $appointments = Appointment::where('clinic_id', $clinicId)->get();
 
         return view('member.appointment.member-appointment-index', [
             'clinic' => $this->clinic($clinicId),
@@ -53,17 +60,44 @@ class AppointmentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $clinicId, int $appointmentId)
     {
-        //
+        $appointment = Appointment::find($appointmentId);
+
+        return view('member.appointment.member-appointment-show-detail', [
+            'clinic' => $this->clinic($clinicId),
+            'appointment' => $appointment,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request)
     {
-        //
+        $user = $this->member();
+
+        $clinic = \App\Models\Clinic::whereHas('usersClincs', function($query) use ($user) {
+            $query->where('user_id', $user->id);
+            // $query->where('role', 'doctor');
+        })->first();
+
+        if(!$clinic)
+        {
+            return back()->with('error', 'Vous n\'avez pas les permissions requises pour effectuer cette action');
+        }
+
+        $appointment = Appointment::find($request->appointment_id);
+        $appointment->statut = 'accepted';
+        $appointment->sector = $this->member()->role;
+        $appointment->concerned_id = $this->member()->id;
+
+        $appointment->update();
+
+        session()->flash('success', 'Vous avez pris ce Rendez-vous');
+        return back();
+
+        
     }
 
     /**

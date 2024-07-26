@@ -22,11 +22,10 @@ return new class extends Migration
             $table->unsignedBigInteger('clinic_id');
             $table->unsignedBigInteger('concerned_id')->nullable();
 
-            $table->softDeletes();
-
             $table->foreign('patient_id')->on('users')->references('id')->onDelete('cascade');
             $table->foreign('clinic_id')->on('clinics')->references('id')->onDelete('cascade');
             $table->foreign('concerned_id')->on('users')->references('id')->onDelete('set null');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

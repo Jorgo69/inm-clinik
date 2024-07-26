@@ -32,7 +32,15 @@
                 <div>
                     <button type="button" class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                         <span class="sr-only">Ouvrir menu user</span>
-                        <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo">
+                        {{-- <img class="w-8 h-8 rounded-full" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo"> --}}
+                        <span class="size-6 uppercase text-center flex items-center justify-center tracking-tighter font-bold bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40">
+                          @auth
+                          {{
+                          Str::substr(auth()->user()->name, 0, 1).
+                          Str::substr(auth()->user()->firstname, 0, 1)
+                          }}
+                        @endauth
+                        </span>
                     </button>
                 </div>
                 
@@ -55,6 +63,9 @@
                     </li>
                     <li>
                         <a href="{{route('patient.setting.index')}}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Parametre</a>
+                    </li>
+                    <li>
+                      <button id="installButton" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white">Télécharger l'application</button>
                     </li>
                     <li>
                         {{-- <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem"> --}}

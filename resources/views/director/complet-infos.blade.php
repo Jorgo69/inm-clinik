@@ -1,4 +1,10 @@
-<x-app-layout>
+@extends('layouts.app')
+  @section('layouts-sidebar')
+    @include('layouts.sidebar')
+  @endsection
+
+{{-- Contenu - Yield Container --}}
+  @section('app-container')
     
     <div class="pt-10 sm:ml-64">          
         <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
@@ -11,7 +17,7 @@
             </div>
             @endif
 
-            <form class="max-w-md mx-auto" action="{{route('director.asking.post')}}" method="POST" enctype="multipart/form-data">
+            <form class="max-w-md mx-auto" action="{{route('director.asking.post', ['country' => 'Benin'])}}" method="POST" enctype="multipart/form-data">
                 @csrf
                         <div class="relative z-0 w-full mb-5 group active">
                             <x-input-label for="complet_name" :value="__('Nom complet *')" />
@@ -19,15 +25,16 @@
                             <x-input-error :messages="$errors->get('complet_name')" class="mt-2" />
                         </div>
                         <div class="relative z-0 w-full mb-5 group active">
-                            <x-input-label for="matricule" :value="__('Matricule *')" />
-                            <x-text-input id="matricule" class="block mt-1 w-full" type="text" name="matricule"  />
-                            <x-input-error :messages="$errors->get('matricule')" class="mt-2" />
+                            <x-input-label for="city" :value="__('Ville *')" />
+                            <x-text-input id="city" class="block mt-1 w-full" type="text" name="city"  />
+                            <x-input-error :messages="$errors->get('city')" class="mt-2" />
                         </div>
                         <div class="relative z-0 w-full mb-5 group active">
-                            <x-input-label for="adresse" :value="__('Votre adresse *')" />
-                            <x-text-input id="adresse" class="block mt-1 w-full" type="text" name="adresse"  />
-                            <x-input-error :messages="$errors->get('adresse')" class="mt-2" />
+                            <x-input-label for="neighborhood_adress" :value="__('Quartier')" />
+                            <x-text-input id="neighborhood_adress" class="block mt-1 w-full" type="text" name="neighborhood_adress"  />
+                            <x-input-error :messages="$errors->get('neighborhood_adress')" class="mt-2" />
                         </div>
+                        
                         {{-- <div class="relative z-0 w-full mb-5 group active">
                             <x-input-label for="unique_number" :value="__('Numero d\'identification unique')" />
                             <x-text-input id="unique_number" class="block mt-1 w-full" type="text" name="unique_number"  />
@@ -115,5 +122,4 @@
     @push('srcCDN')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     @endpush
-
-</x-app-layout>
+@endsection

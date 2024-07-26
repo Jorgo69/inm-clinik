@@ -13,6 +13,11 @@ class MemberSecretaryController extends Controller
     {
         $this->myClinicIdService = $myClinicIdService;
     }
+    private function clinic(int $clinicId)
+    {
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        return $clinic;
+    }
 
     /** Liste le personnel a travers l'id de la clinique */
     private function personal(int $id)
@@ -30,7 +35,6 @@ class MemberSecretaryController extends Controller
      */
     public function index(int $clinicId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
 
         // $personals = $this->personal($clinicId);
         // dd($secretaries);
@@ -45,7 +49,7 @@ class MemberSecretaryController extends Controller
         // dd($secretair);
 
         return view('director.member.secretary.director-member-secretary-index', [
-            'clinic' => $clinic,
+            'clinic' => $this->clinic($clinicId),
             'secretaires' => $secretaires,
         ]);
         

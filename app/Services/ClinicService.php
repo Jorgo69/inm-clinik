@@ -9,7 +9,7 @@ class ClinicService
     {
         $clinicId = Clinic::find($id);
         // dd($clinicId);
-        
+                
         return $clinicId;
     }
 }

@@ -16,6 +16,12 @@ class MemberPersonalController extends Controller
         $this->myClinicIdService = $myClinicIdService;
     }
 
+    private function clinic(int $clinicId)
+    {
+        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
+        return $clinic;
+    }
+
     /** Liste du personnel a travers l'id de la clinique */
     private function personal(int $id)
     {
@@ -40,15 +46,15 @@ class MemberPersonalController extends Controller
         }
     
         switch ($showRoleName) {
-            case 'Doctor':
+            case 'doctor':
                 return 'member-doctor';
-            case 'Secretary':
+            case 'secretary':
                 return 'member-secretary';
-            case 'Accountant':
+            case 'accountant':
                 return 'member-accountant';
-            case 'Nurse':
+            case 'nurse':
                 return 'member-nurse';
-            case 'Pharmacist':
+            case 'pharmacist':
                 return 'member-pharmacist';
             // Ajoutez d'autres cas selon les rôles que vous avez
             default:
@@ -63,13 +69,14 @@ class MemberPersonalController extends Controller
      */
     public function index(int $clinicId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
-
-        $personals =  $this->personal($clinicId);
         
 
+        $personals =  $this->personal($clinicId);
+
+        // dd($personals);
+
         return view('director.member.personal.member-personal-index' , [
-            'clinic' => $clinic,
+            'clinic' => $this->clinic($clinicId),
             'personals' => $personals,
         ]);
     }
@@ -128,21 +135,19 @@ class MemberPersonalController extends Controller
     /**
      * Affiche les details pour un membre specifique.
      */
-    public function show(int $id,int $personalId)
+    public function show(int $clinicId,int $personalId)
     {
-        $clinic =  $this->myClinicIdService->ClinicIdService($id);
-
         $personal = \App\Models\User::find($personalId);
 
         $currentPersonal = $personal->with('clinicUserRoles')->findOrFail($personalId);
 
-        // dd($currentPersonal);
+        // dd($personalId);
         
 
         $roles = \App\Models\Role::all();
 
         return view('director.member.personal.member-personal-detail', [
-            'clinic' => $clinic,
+            'clinic' => $this->clinic($clinicId),
             'personal' => $personal,
             'roles' => $roles,
             'currentPersonal' => $currentPersonal,
@@ -160,9 +165,42 @@ class MemberPersonalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, int $clinicId, int $personalId)
     {
-        //
+        // Valide que 'attribute_role' est requis, doit être un nombre, et doit exister dans la table roles
+        $request->validate([
+            'attribute_role' => ['required', 'numeric', 'exists:roles,id'],
+        ]);
+        // dd($clinicId);
+        $role_id = $request->attribute_role; // ID du rôle sélectionné
+        $adder_id = Auth::id(); // ID de l'utilisateur qui fait l'ajout (l'administrateur ou directeur)
+
+        $role_member = $this->showRole($role_id);
+
+        $updateToMember = User::find($personalId);
+        $updateToMember->role = $role_member;
+
+        $updateToMember->update();
+
+        // Récupération de l'utilisateur à qui le rôle sera attribué
+        $user = \App\Models\User::findOrFail($personalId);
+
+        $roleAttribute = $user->clinicUserRoles()
+        ->wherePivot('clinic_id', $clinicId)
+        ->exists();
+
+        if ($roleAttribute) {
+
+            $user->clinicUserRoles()->detach();
+
+            // Utilisation de la relation many-to-many pour attacher le rôle à l'utilisateur avec les informations supplémentaires
+            $user->clinicUserRoles()->attach($role_id, [
+                'clinic_id' => $clinicId,
+                'adder_id' => $adder_id,
+            ]);
+            return back()->with('info', 'Poste changer avec  success');
+        }
+
     }
 
     /**

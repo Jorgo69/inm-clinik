@@ -4,10 +4,19 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <link rel="manifest" href="{{asset('assets/json/manifest.json')}}">
+        {{-- Manifest Start --}}
+
+    
+        @laravelPWA
+
+
+        {{-- Manifest Done --}}
 
         <title>{{ config('app.name', 'Ma Clinik') }}</title>
         @stack('hrefCDN')
         @stack('jquery')
+        @stack('summernoteCdnHref')
 
         <!-- Fonts -->
         {{-- <link rel="preconnect" href="https://fonts.bunny.net"> --}}
@@ -36,5 +45,6 @@
         @include('layouts.footer')
         @stack('srcCDN')
         @stack('liveSearchAjax')
+        @stack('summernoteCdnScript')
     </body>
 </html>
