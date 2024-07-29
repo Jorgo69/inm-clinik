@@ -5,7 +5,7 @@ use App\Models\Clinic;
 
 class ClinicService
 {
-    public function ClinicIdService(int $id)
+    public function ClinicIdService($id)
     {
         $clinicId = Clinic::find($id);
         // dd($clinicId);

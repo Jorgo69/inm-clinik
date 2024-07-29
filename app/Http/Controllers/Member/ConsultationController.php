@@ -32,6 +32,7 @@ class ConsultationController extends Controller
 
         return view('member.consultation.consultation-index', [
             'clinic' => $this->clinic($clinicId),
+            'clinicId' => $clinicId,
         ]);
     }
 

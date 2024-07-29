@@ -73,8 +73,8 @@ class PatientController extends Controller
             'gender' => $request->gender,
             'role' => 'patient',
             'email' => $request->email,
-            'password' => Hash::make('password'),
-            // 'password' => Hash::make(Carbon::now()),
+            // 'password' => Hash::make('password'),
+            'password' => Hash::make(Carbon::now()),
         ]);
 
         return back()->with('success', 'Patient ajouter avec success');

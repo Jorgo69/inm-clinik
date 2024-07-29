@@ -20,6 +20,11 @@ class ConsultationMedical extends Model
         return $this->belongsTo(User::class, 'concerned_id');
      }
 
+     public function patient(): BelongsTo
+     {
+        return $this->belongsTo(User::class, 'patient_id');
+     }
+
      /** 
       * Pour lier retrouver la clinique
       */

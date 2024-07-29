@@ -207,13 +207,13 @@
     @push('jquery')            
         
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
-    <script src="{{asset('assets/js/cdn-jquery.js')}}"></script>
+    {{-- <script src="{{asset('assets/js/cdn-jquery.js')}}"></script> --}}
 
     @endpush
 
     @push('liveSearchAjax')
 
-   <script>
+   {{-- <script>
     $(document).ready(function() {
     $('#search-input').on('keyup', function() {
         let query = $(this).val();
@@ -253,9 +253,9 @@
     });
     // Charger les résultats par défaut au chargement de la page
     $('#search-input').trigger('keyup');
-});
+    });
 
-   </script>
+   </script> --}}
         
     @endpush
 

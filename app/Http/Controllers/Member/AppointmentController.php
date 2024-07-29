@@ -20,6 +20,7 @@ class AppointmentController extends Controller
         $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
         return $clinic;
     }
+    
 
     private function member()
     {
@@ -33,11 +34,12 @@ class AppointmentController extends Controller
      */
     public function index(int $clinicId)
     {
-        $appointments = Appointment::where('clinic_id', $clinicId)->get();
+        // $appointments = Appointment::where('clinic_id', $clinicId)->get();
 
         return view('member.appointment.member-appointment-index', [
             'clinic' => $this->clinic($clinicId),
-            'appointments' => $appointments,
+            // 'appointments' => $appointments,
+            'clinicId' => $clinicId,
         ]);
     }
 
@@ -94,8 +96,7 @@ class AppointmentController extends Controller
 
         $appointment->update();
 
-        session()->flash('success', 'Vous avez pris ce Rendez-vous');
-        return back();
+        return back()->with('success', 'Vous avez pris ce Rendez-vous');
 
         
     }

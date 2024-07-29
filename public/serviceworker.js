@@ -54,7 +54,7 @@ if ('serviceWorker' in navigator) {
 }
 
 // Handle the install button
-let deferredPrompt;
+/* let deferredPrompt;
 const installButton = document.getElementById('installButton');
 
 window.addEventListener('beforeinstallprompt', (e) => {
@@ -84,4 +84,4 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 window.addEventListener('appinstalled', (evt) => {
     console.log('a2hs', 'installed');
-});
+}); */
