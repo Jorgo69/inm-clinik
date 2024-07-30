@@ -94,15 +94,15 @@
 
                                             <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                                 <div>
-                                                    <h2 class="font-medium text-gray-800 dark:text-white ">{{$personal->askers->name .' '. $personal->askers->firstname}}</h2>
+                                                    <h2 class="font-medium capitalize text-gray-800 dark:text-white ">{{$personal->askers->name .' '. $personal->askers->firstname}}</h2>
                                                     <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{$personal->askers->email}}</p>
                                                 </div>
                                             </td>
                                             
                                             <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                                {{-- <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800"> --}}
-                                                <div class="inline px-3 py-1 text-sm font-normal rounded-full text-red-500 gap-x-2 bg-red-100/60 dark:bg-gray-800">
-                                                    En Attent ...
+                                                {{-- <div class="inline px-3 py-1 text-sm font-normal rounded-full  dark:bg-gray-800"> --}}
+                                                <div class="inline px-3 py-1 text-sm font-normal rounded-full {{$personal->statut === 'validated' ? 'text-emerald-500 bg-emerald-100/60' : 'text-red-500 bg-red-100/60'}} gap-x-2 dark:bg-gray-800">
+                                                    {{$personal->statut === 'validated' ? 'Role Attribuer' : 'En Attente'}}
                                                 </div>
                                             </td>
                                             
@@ -120,7 +120,13 @@
                                             </td>
                                         </tr> 
                                         @empty
-                                        <tr><td colspan="4" class="px-4 py-4 text-sm text-center">Aucune demande attribuer a cette clinique </td></tr>
+                                        <tr>
+                                            <td colspan="6" class="px-4 py-4 text-sm text-center">
+                                                <div class="flex justify-center">
+                                                    <img src="{{ asset('assets/svg/undraw-no-data.svg') }}" alt="no-data" class="size-20">
+                                                </div>
+                                            </td>
+                                        </tr>
                                         @endforelse
                                         
                                         

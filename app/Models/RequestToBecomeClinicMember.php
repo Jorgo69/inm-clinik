@@ -36,4 +36,9 @@ class RequestToBecomeClinicMember extends Model
     {
         return $this->belongsTo(Clinic::class, 'clinic_id');
     }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
 }

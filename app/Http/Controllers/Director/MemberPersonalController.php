@@ -69,6 +69,9 @@ class MemberPersonalController extends Controller
      */
     public function index(int $clinicId)
     {
+
+        // $member = User::whereHas('clinicUserRoles', )->get();
+        // dd($member);
         
 
         $personals =  $this->personal($clinicId);

@@ -29,12 +29,11 @@ class PatientController extends Controller
      */
     public function index(int $clinicId)
     {
-        $patients = User::where('role', 'patient')
-                        ->orderByDesc('created_at')->get();
+        
         
         return view('member.patient.member-patient-index', [
             'clinic' => $this->clinic($clinicId),
-            'patients' => $patients,
+            'clinicId' => $clinicId,
         ]);
     }
 
