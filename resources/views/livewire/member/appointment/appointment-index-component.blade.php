@@ -74,7 +74,7 @@
                             @forelse ($appointments as $appointment)
                             <tr>
                                 <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                    <div class="inline px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
+                                    <div class="inline capitalize px-3 py-1 text-sm font-normal rounded-full text-emerald-500 gap-x-2 bg-emerald-100/60 dark:bg-gray-800">
                                         {{\Carbon\Carbon::parse($appointment->date)->translatedFormat('l jS F Y')}}
                                             pour
                                         {{$appointment->time}}
@@ -82,7 +82,7 @@
                                 </td>
                                 <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                     <div>
-                                        <h2 class="font-medium text-gray-800 dark:text-white ">{{$appointment->patientAppointment->name. ' '. $appointment->patientAppointment->firstname}}</h2>
+                                        <h2 class="font-medium capitalize text-gray-800 dark:text-white ">{{$appointment->patientAppointment->name. ' '. $appointment->patientAppointment->firstname}}</h2>
                                         <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{$appointment->patientAppointment->email}}</p>
                                     </div>
                                 </td>
@@ -132,7 +132,11 @@
                             </tr>
                             @empty
                             <tr>
-                                <td class="px-4 py-4 text-sm whitespace-nowrap text-center" colspan="6">Aucun Rendez-vous pour le moment</td>
+                                <td colspan="6" class="px-4 py-4 text-sm text-center">
+                                    <div class="flex justify-center">
+                                        <img src="{{ asset('assets/svg/undraw-no-data.svg') }}" alt="no-data" class="size-20">
+                                    </div>
+                                </td>
                             </tr>
                             @endforelse                                        
                         </tbody>
@@ -143,7 +147,7 @@
     </div>
 
 
-    <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
+    <div class="mt-6 sm:flex sm:items-center sm:justify-end ">
         
         <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
             {{$appointments->links()}}

@@ -50,6 +50,30 @@ class PatientController extends Controller
         ]);
     }
 
+    public function takeAppointment(Request $request)
+    {
+        
+        $request->validate([
+            'reason' => ['required', 'min:5'],
+            'date' => ['required', 'min:5'],
+            'time' => ['required', 'min:5'],
+        ]);
+
+        $appointment = new \App\Models\Appointment();
+        $appointment->reason = $request->reason;
+        $appointment->date = $request->date;
+        $appointment->time = $request->time;
+        $appointment->patient_id = $request->patient_id;
+        $appointment->clinic_id = $request->clinic_id;
+        // $appointment->sector = $request->sector;
+
+        // dd($appointment);
+
+        $appointment->save();
+
+        return redirect()->route('member.patient.index', ['clinic_id' => $request->clinic_id])->with('success', 'Rendez-vous note avec success');
+    }
+
     /**
      * Store a newly created resource in storage.
      */

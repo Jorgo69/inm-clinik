@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
+use App\Models\ConsultationMedical;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
@@ -47,8 +48,9 @@ class DoctorController extends Controller
     {
         $clinic =  $this->myClinicIdService->ClinicIdService($clinicId);
 
-        return view('member.doctor.member-doctor-appointment-index', [
+        return view('member.doctor.member-doctor-consultations-index', [
             'clinic' => $clinic,
+            'clinicId' => $clinicId,
         ]);
     }
 
@@ -89,8 +91,10 @@ class DoctorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        
+        $consultation = ConsultationMedical::find($request->consultationsId);
+        dd($consultation);
     }
 }

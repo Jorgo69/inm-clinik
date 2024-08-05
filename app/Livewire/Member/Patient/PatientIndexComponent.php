@@ -16,6 +16,8 @@ class PatientIndexComponent extends Component
     {
         $this->clinicId = $clinicId;
     }
+    
+
 
     public function render()
     {
@@ -24,7 +26,7 @@ class PatientIndexComponent extends Component
                     $query->where('name', 'like', '%'. $this->search  .'%')
                     ->orWhere('firstname', 'like', '%'. $this->search . '%');
                 })
-                        ->orderByDesc('created_at');
+                ->orderByDesc('created_at');
 
         $patients = $query->get();
                         

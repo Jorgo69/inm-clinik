@@ -13,11 +13,11 @@
             @elseif (session('error'))
                 @include('alerts.alert-error')
             @endif
-            <div class="grid grid-cols-1 gap-12 mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div class="grid grid-cols-2 gap-12 mt-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                     
                 {{-- Photo - Profil --}}
                 <div class="p-4 rounded-lg bg-blue-50 md:p-6 dark:bg-gray-800">
-                    <div class="flex flex-col items-center p-8">
+                    <div class="w-full  flex flex-col items-center p-8">
                         {{-- <img src="" alt="" class="w-32 h-32 bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40"> --}}
                         <div class="w-32 h-32 text-center flex items-center justify-center text-5xl tracking-tighter font-bold bg-gray-200 hover:ring-blue-500 animate rounded-full dark:bg-white ring-4 ring-gray-300 dark:ring-white shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40">
                             {{
@@ -39,7 +39,7 @@
                 </div>
                 
                 {{-- Info - Complexion --}}
-                <div class="max-w-4xl xl:col-span-3 p-6 bg-blue-50 rounded-md shadow-md dark:bg-gray-800">
+                <div class="max-w-7xl md:col-span-2 sm:col-span-2 xl:col-span-3 p-6 bg-blue-50 rounded-md shadow-md dark:bg-gray-800">
                     <h2 class="text-lg font-semibold text-gray-700 capitalize dark:text-white">Infos Supplementaire</h2>
                 
                     <section>
@@ -106,7 +106,7 @@
                                         Annuler
                                     </x-primary-button>
                                     @else
-                                    <x-primary-button>
+                                    <x-primary-button disabled>
                                         Deja pris
                                     </x-primary-button>
                                     @endif

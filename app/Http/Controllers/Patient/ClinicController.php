@@ -7,6 +7,20 @@ use Illuminate\Http\Request;
 
 class ClinicController extends Controller
 {
+    private function asker()
+    {
+        $asker = auth()->user();
+        return $asker;
+    }
+
+    private function askerExist($request)
+    {
+        $exist = \App\Models\RequestToBecomeClinicMember::where('asker_id', $this->asker()->id)
+                                            ->where('clinic_id', $request->clinic_id)
+                                            ->first();
+        
+        return $exist;
+    }
     /**
      * Display a listing of the resource.
      */
@@ -34,7 +48,7 @@ class ClinicController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
         $clinic = \App\Models\Clinic::find($id);
 

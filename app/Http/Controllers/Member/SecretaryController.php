@@ -103,9 +103,9 @@ class SecretaryController extends Controller
 
         // dd($appointment);
 
-        $appointment->save();
+        // $appointment->save();
 
-        return back()->with('success', 'Rendez-vous note avec success');
+        return redirect()->back()->with('success', 'Rendez-vous note avec success');
     }
 
     /**

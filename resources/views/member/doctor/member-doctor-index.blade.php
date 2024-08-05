@@ -125,8 +125,10 @@
                                         </tr>
                                         @empty
                                         <tr>
-                                            <td colspan="4" class="px-4 text-center py-4 text-sm whitespace-nowrap">
-                                                Aucun RDV pour vous
+                                            <td colspan="6" class="px-4 py-4 text-sm text-center">
+                                                <div class="flex justify-center">
+                                                    <img src="{{ asset('assets/svg/undraw-no-data.svg') }}" alt="no-data" class="size-20">
+                                                </div>
                                             </td>
                                         </tr>
                                         @endforelse

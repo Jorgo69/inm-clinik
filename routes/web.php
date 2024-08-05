@@ -58,6 +58,8 @@ Route::middleware(['auth'])->group( function() {
     // creation de compte patient
     Route::post('member/patient/store/{clinic_id}', [MemberPatientController::class, 'store'])->name('member.patient.store');
 
+    Route::post('/member/patient/take/appointment', [MemberPatientController::class, 'takeAppointment'])->name('member.patient.take.appointment');
+
     // liste des consultations
     Route::get('/member/consultations/liste/{clinic_id}', [MemberConsultationController::class, 'index'])->name('member.consultation.index');
 
@@ -66,7 +68,7 @@ Route::middleware(['auth'])->group( function() {
     // vu detail RDV
     Route::get('/member/appointment/show/detail/{clinic_id}/{appointment_id}', [MemberAppointmentController::class, 'show'])->name('member.appointment.show');
     // accepter RDV patient
-    Route::put('/member/appointment/accept/{appointment_id}', [MemberAppointmentController::class, 'edit'])->name('member.appointment.accept');
+    Route::put('/member/appointment/accept/{appointment_id}', [MemberAppointmentController::class, 'edit'])->name('member.appointment.accept')->middleware('only.doctor');
 
     // detail consultation specifique pour prise de note
     Route::get('/member/consultation/espace/detail/patient/{clinic_id}/{patient_id}', [MemberConsultationController::class, 'show'])->name('member.consultation.detail.show');
@@ -85,6 +87,9 @@ Route::middleware(['auth'])->group( function() {
     Route::get('/member/doctor/index/{clinic_id}', [MemberDoctorController::class, 'index'])->name('member.doctor.index');
     // liste de tous les RDV
     Route::get('/member/doctor/appointment/all/index/{clinic_id}', [MemberDoctorController::class, 'create'])->name('member.doctor.all.appointment.index');
+
+    // Supppression d'une consultations
+    Route::delete('member/doctor/delete/consultation', [MemberDoctorController::class, 'destroy'])->name('member.doctor.consultation.delete');
 });
 
 Route::get('/clinic', function(){

@@ -21,7 +21,7 @@ class AppointmentIndexComponent extends Component
 
     public function updatingSearch()
     {
-        // Reset pagination when search term is updated
+        // Réinitialise la pagination lorsque le terme de recherche est mis à jour
         $this->resetPage();
     }
 
