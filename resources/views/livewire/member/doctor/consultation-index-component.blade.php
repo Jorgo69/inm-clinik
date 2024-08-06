@@ -108,7 +108,7 @@
                                             x-transition:leave-start="opacity-100 scale-100"
                                             x-transition:leave-end="opacity-0 scale-90"
                                             class="absolute bottom-0 right-0 z-100 w-48 py-2 mt-2 origin-top-right bg-white rounded-md shadow-xl dark:bg-gray-800">
-                                                <a href="{{ route('member.patient.show.detail', ['clinic_id' => $clinicId, 'patient_id' => 1]) }}" class="details-link block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                                                <a href="{{ route('member.doctor.show.consultation', ['clinic_id' => $clinicId, 'consultation_id' => $consultations->id]) }}" class="details-link block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-300 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                                                     <x-svg-detail/>
                                                     Modifier
                                                 </a>

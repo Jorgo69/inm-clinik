@@ -88,6 +88,12 @@ Route::middleware(['auth'])->group( function() {
     // liste de tous les RDV
     Route::get('/member/doctor/appointment/all/index/{clinic_id}', [MemberDoctorController::class, 'create'])->name('member.doctor.all.appointment.index');
 
+    // modification de consultation
+    Route::get('/member/doctor/show/consultation/{clinic_id}/{consultation_id}', [MemberDoctorController::class, 'show'])->name('member.doctor.show.consultation');
+
+    // Modification de la consultation
+    Route::put('member/doctor/update/consultation/{clinic_id}/{consultation_id}', [MemberDoctorController::class, 'update'])->name('member.doctor.consultation.update');
+
     // Supppression d'une consultations
     Route::delete('member/doctor/delete/consultation', [MemberDoctorController::class, 'destroy'])->name('member.doctor.consultation.delete');
 });

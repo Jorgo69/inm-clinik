@@ -9,6 +9,9 @@
 @section('app-container')
     <div class="p-4 sm:ml-64">
         <x-aside>
+            @session('success')
+                @include('alerts.alert-success')
+            @endsession
             <section class="container px-4 mx-auto">
                 <div class="sm:flex sm:items-center sm:justify-between">
                     <div>

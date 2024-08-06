@@ -67,9 +67,14 @@ class DoctorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(int $clinicId, int $consultationId)
     {
-        //
+        $consultation = ConsultationMedical::find($consultationId);
+
+        return view('member.doctor.member-doctor-consultation-detail-show', [
+            'clinic' => $this->clinic($clinicId),
+            'consultation' => $consultation,
+        ]);
     }
 
     /**
@@ -83,9 +88,21 @@ class DoctorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $consultation = ConsultationMedical::find($request->consultation_id);
+        $consultation->consultation = $request->summernoteConsultation;
+        $consultation->prescription_medical = $request->summernotePrescription;
+
+
+        if($consultation->clinic_id == $request->clinic_id && $consultation->concerned_id == auth()->user()->id)
+        {
+            $consultation->save();
+            return redirect()->back()->with('success', 'Modification prise en compte avec success');
+        }
+
+        return redirect()->back()->with('success', 'Vous ne pouvez modifier');
+
     }
 
     /**
@@ -95,6 +112,9 @@ class DoctorController extends Controller
     {
         
         $consultation = ConsultationMedical::find($request->consultationsId);
-        dd($consultation);
+
+        $consultation->delete();
+        
+        return redirect()->back()->with('success', 'Suppression effectif');
     }
 }
